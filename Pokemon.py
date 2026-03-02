@@ -11,7 +11,6 @@ wild_pokemon = [
 ]
 
 own_pokemon = [{"Name" : "Charizard", "Type" : "Fire", "Level" : 3, "Health" : 90, "Attack" : ["Ember", random.randrange(10, 25), "Flamethrower", random.randrange(25, 45)]}]
-
 def overworld_timer():
     timer = random.randint(1, 5)
     time.sleep(timer)
@@ -45,13 +44,48 @@ def battle():
 
     print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
 
-    while True:
+    if player_choice == 1:
         enemy_attack_randomiser = random.randrange(0, 3, 2)
-        print("Random number for attack", enemy_attack_randomiser)
         print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser], "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
         player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
         print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
-        break
+        print("")
+        print("What attack would you like to use")
+        print(own_pokemon["Attack"][0], "90% chance of working. ", own_pokemon["Attack"][2], "70% chance of working")
+
+        while True:
+            try:
+                player_attack = int(input("1 for", own_pokemon["Attack"][0], "or 2 for", own_pokemon["Attack"][2]))
+                if player_attack < 1 or player_attack > 2:
+                    print("Error. Please enter a number either 1 or 2")
+                else:
+                    break
+            except ValueError:
+                print("Error. Please enter a number either 1 or 2")
+
+        random_chance = random.randint(1, 10)
+        if player_attack == 1:
+            if random_chance == 10:
+                print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                print("The attack missed")
+            else:
+                print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does", player_pokemon["Attack"][1], "damage")
+                enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                print("")
+        else:
+            if random_chance >= 8:
+                print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                print("The attack missed")
+                print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does", player_pokemon["Attack"][3], "damage")
+                enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                print("")
+
+    else:
+        overworld_timer()
 
 
 overworld_timer()

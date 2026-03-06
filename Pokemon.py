@@ -18,6 +18,9 @@ def overworld_timer():
     battle()
 
 def battle():
+    global player_pokemon_hp
+    global player_pokemon
+    global enemy_pokemon
     x = random.randint(0, len(wild_pokemon) - 1)
     enemy_pokemon = wild_pokemon[x]
     player_pokemon = own_pokemon[0]
@@ -30,72 +33,598 @@ def battle():
     print("It's level", enemy_pokemon["Level"])
     print("It has", enemy_pokemon["Health"], "health")
     print("")
-
-    while True:
-        try:
-            print("Press 1 to battle or 2 to run away")
-            player_choice = int(input())
-            if player_choice < 1 or player_choice > 2:
-                print("Error. Please enter a number either 1 or 2")
-            else:
-                break
-        except ValueError:
-            print("Error. Please enter a number either 1 or 2")
-
-    print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
-
-    if player_choice == 1:
-        enemy_attack_randomiser = random.randrange(0, 3, 2)
-        print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser], "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
-        player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
-        print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
-        print("")
-        print("What attack would you like to use")
-        print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2], "70% chance of working")
-
+    while player_pokemon_hp > 0 and enemy_pokemon["Health"] > 0:
         while True:
             try:
-                player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
-                if player_attack < 1 or player_attack > 2:
+                print("Press 1 to battle or 2 to run away")
+                player_choice = int(input())
+                if player_choice < 1 or player_choice > 2:
                     print("Error. Please enter a number either 1 or 2")
                 else:
                     break
             except ValueError:
                 print("Error. Please enter a number either 1 or 2")
 
-        random_chance = random.randint(1, 10)
-        if player_attack == 1:
-            if random_chance == 10:
-                print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
-                print("The attack missed")
+        print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+
+        if player_choice == 1:
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser], "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2], "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does", player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
             else:
-                print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
-                print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does", player_pokemon["Attack"][1], "damage")
-                enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
-                print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
-                print("")
-        else:
-            if random_chance >= 8:
-                print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
-                print("The attack missed")
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does", player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser], "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2], "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
             else:
-                print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
-                print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does", player_pokemon["Attack"][3], "damage")
-                enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
-                print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
-                print("")
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
 
-        if player_pokemon_hp > 0:
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
 
-        else:
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
 
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
 
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
 
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
 
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
 
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+
+            if player_pokemon_hp <= 0 or enemy_pokemon["Health"] <= 0:
+                break
+
+            enemy_attack_randomiser = random.randrange(0, 3, 2)
+            print("Enemy", enemy_pokemon["Name"], "attacks with", enemy_pokemon["Attack"][enemy_attack_randomiser],
+                  "and does", enemy_pokemon["Attack"][enemy_attack_randomiser + 1], "damage")
+            player_pokemon_hp = player_pokemon_hp - enemy_pokemon["Attack"][enemy_attack_randomiser + 1]
+            print("Player's", player_pokemon["Name"], "has", player_pokemon_hp, "HP")
+            print("")
+            print("What attack would you like to use")
+            print(own_pokemon[0]["Attack"][0], "90% chance of working. ", own_pokemon[0]["Attack"][2],
+                  "70% chance of working")
+
+            while True:
+                try:
+                    player_attack = int(input("1 for Ember or 2 for Flamethrower: "))
+                    if player_attack < 1 or player_attack > 2:
+                        print("Error. Please enter a number either 1 or 2")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please enter a number either 1 or 2")
+
+            random_chance = random.randint(1, 10)
+            if player_attack == 1:
+                if random_chance == 10:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][0])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][0], "and does",
+                          player_pokemon["Attack"][1], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][1]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
+            else:
+                if random_chance >= 8:
+                    print("Players", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("The attack missed")
+                else:
+                    print("Player's", player_pokemon["Name"], "attempts", player_pokemon["Attack"][2])
+                    print("Player's", player_pokemon["Name"], "attacks with", player_pokemon["Attack"][2], "and does",
+                          player_pokemon["Attack"][3], "damage")
+                    enemy_pokemon["Health"] = enemy_pokemon["Health"] - player_pokemon["Attack"][3]
+                    print("Enemy", enemy_pokemon["Name"], "has", enemy_pokemon["Health"], "HP")
+                    print("")
     else:
         overworld_timer()
 
 
 overworld_timer()
 
+if player_pokemon_hp <= 0 and enemy_pokemon["Health"] > 0:
+    print("Your", player_pokemon["Name"], "has been defeated.")
+elif player_pokemon_hp > 0 and enemy_pokemon["Health"] <= 0:
+    print("Your", player_pokemon["Name"], "has defeated", enemy_pokemon["Name"])
+    player_pokemon_hp = 90
+    print("Would you like to battle again?")
+    while True:
+        try:
+            play_again = int(input("1 for Yes or 2 for No: "))
+            if play_again == 1 or play_again == 2:
+                break
+            else:
+                print("Error. Please enter a number either 1 or 2")
+        except ValueError:
+            print("Error. Please enter a number either 1 or 2")
+
+if play_again == 1:
+    overworld_timer()
+else:
+    print("Thanks for playing")

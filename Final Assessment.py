@@ -108,7 +108,7 @@ def room_1():
             print("The lions start clawing at you but a herd of wildebeest catch their attention")
             print("The lions leave you in a bad condition but you survive")
             print("")
-            print("Player health has decreased from", player_stats["Health"], "to", player_stats["Health"] - 50)
+            print("Player health has decreased from", player_stats["Health"], to player_stats["Health"] - 50)
             player_stats["Health"] = player_stats["Health"] - 50
 
     print("After your encounter with the lions, you see a faint building in the distance")

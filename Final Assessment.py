@@ -12,11 +12,12 @@ def spacing():
     print("")
 
 def starting_sequence():
+    print("")
     print("Welcome to Around The World Escape Room")
     print("You have to go through 5 different rooms to escape")
     print("Each room will have its own theme")
 
-def player_stats():
+def display_player_stats():
     print("Your stats:")
     print("Health:", player_stats["Health"])
     print("Speed:", player_stats["Speed"])
@@ -69,15 +70,19 @@ def room_1():
     if user_choice == 1:
         random_chance = random.randint(1,10)
         if random_chance > 8:
+            print("")
             print("You try running away, but you twist your ankle")
             print("Player speed has decreased from", player_stats["Speed"], "to", player_stats["Speed"] - 10)
             player_stats["Speed"] = player_stats["Speed"] - 10
             print("Luckily the lions don't notice you running away")
         else:
+            print("")
             print("You run away, and the lions don't see you")
     elif user_choice == 2:
+        print("")
         print("You slowly walk away from the lions without them noticing you")
     else:
+        print("")
         print("You lunge towards the lions and they get ready to fight back")
         random_chance = random.randint(1,2)
         if random_chance == 1:
@@ -87,8 +92,9 @@ def room_1():
             print("")
             while True:
                 try:
-                    player_choice = int(input("1 to drink | 2 to leave"))
+                    player_choice = int(input("1 to drink | 2 to leave: "))
                     if player_choice == 1:
+                        print("")
                         print("You choose to drink the potion")
                         print("The potion gives you some extra health but lowers some strength")
                         print("Player health has increased from", player_stats["Health"], "to", player_stats["Health"] + 10)
@@ -96,6 +102,7 @@ def room_1():
                         player_stats["Health"] = player_stats["Health"] + 10
                         player_stats["Strength"] = player_stats["Strength"] - 10
                     elif player_choice == 2:
+                        print("")
                         print("You chose to leave the potion alone and continue exploring")
                     else:
                         print("Error. Please enter 1 or 2")
@@ -108,19 +115,24 @@ def room_1():
             print("The lions start clawing at you but a herd of wildebeest catch their attention")
             print("The lions leave you in a bad condition but you survive")
             print("")
-            print("Player health has decreased from", player_stats["Health"], to player_stats["Health"] - 50)
+            print("Player health has decreased from", player_stats["Health"], "to", player_stats["Health"] - 50)
             player_stats["Health"] = player_stats["Health"] - 50
 
+    print("")
     print("After your encounter with the lions, you see a faint building in the distance")
     print("You start walking towards the building and a man greets you when you arrive")
     print("'What are you doing out here'")
-    print("'I assume you must be looking for the code to escape'")
+    print("'I assume you're looking for the code to escape'")
+    print("'Follow me. If you answer some of these questions I have right, maybe I'll give you the code'")
+
 
 starting_sequence()
 time.sleep(2)
 menu()
 time.sleep(0.5)
 if playing == True:
+    spacing()
+    display_player_stats()
     room_1()
 else:
     spacing()

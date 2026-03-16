@@ -1,30 +1,30 @@
 import random
 import time
 
-player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}
-inventory = []
+player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
+inventory = []   # This is where any items that the player collects will be stored
 play_game = 0
 
 
-def spacing():
+def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
     print("")
     print("")
 
-def starting_sequence():
+def starting_sequence():   # This is the starting sequence of the game and will only be shown once
     print("")
     print("Welcome to Around The World Escape Room")
     print("You have to go through 5 different rooms to escape")
     print("Each room will have its own theme")
 
-def display_player_stats():
+def display_player_stats():   # This shows the player's stats, and will be used whenever it is required
     print("Your stats:")
     print("Health:", player_stats["Health"])
     print("Speed:", player_stats["Speed"])
     print("Brainpower", player_stats["Brainpower"])
     print("Strengh", player_stats["Strength"])
 
-def menu():
+def menu():   # This is a simple menu that the player can use to play the game or not play the game
     global playing
     spacing()
     print("Each room will have sets of questions that you can answer to recieve items in your inventory")
@@ -49,7 +49,7 @@ def menu():
     else:
         playing = False
 
-def room_1():
+def room_1():   # This is the function for the first room of my escape room
     global player_stats
     spacing()
     print("Welcome to Room 1")
@@ -101,9 +101,11 @@ def room_1():
                         print("Player strength has decreased from", player_stats["Strength"], "to", player_stats["Strength"] - 10)
                         player_stats["Health"] = player_stats["Health"] + 10
                         player_stats["Strength"] = player_stats["Strength"] - 10
+                        break
                     elif player_choice == 2:
                         print("")
                         print("You chose to leave the potion alone and continue exploring")
+                        break
                     else:
                         print("Error. Please enter 1 or 2")
                 except ValueError:
@@ -124,6 +126,7 @@ def room_1():
     print("'What are you doing out here'")
     print("'I assume you're looking for the code to escape'")
     print("'Follow me. If you answer some of these questions I have right, maybe I'll give you the code'")
+
 
 
 starting_sequence()

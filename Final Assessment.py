@@ -7,6 +7,7 @@ play_game = 0
 questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
 room_2_completed = False
+playing = True
 
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
@@ -285,6 +286,7 @@ def room_1():   # This is the function for the first room of my escape room
 def room_2():
     global room_2_completed
     spacing()
+    time.sleep(2)
     print("Welcome to room 2")
     print("You fell into the void and landed on the coastline of what seems to be Japan")
     print("This room has the theme of Japan")

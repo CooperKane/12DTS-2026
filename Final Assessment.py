@@ -4,7 +4,9 @@ import time
 player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
 inventory = []   # This is where any items that the player collects will be stored
 play_game = 0
-questions_correct = 0
+questions_correct = 0   # This will be used during quizzes within the game
+room_1_completed = False
+room_2_completed = False
 
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
@@ -15,7 +17,7 @@ def spacing():   # This just adds some spacing where ever I need it to make the 
 def starting_sequence():   # This is the starting sequence of the game and will only be shown once
     print("")
     print("Welcome to Around The World Escape Room")
-    print("You have to go through 5 different rooms to escape")
+    print("You have to go through 3 different rooms to escape")
     print("Each room will have its own theme")
 
 def display_player_stats():   # This shows the player's stats, and will be used whenever it is required
@@ -50,9 +52,115 @@ def menu():   # This is a simple menu that the player can use to play the game o
     else:
         playing = False
 
+def quiz_room_1():
+    global questions_correct
+    questions_correct = 0
+    print("")
+    print("QUESTION 1: What was the ancient name for the African continent?")
+    while True:
+        try:
+            print("Type the corresponding number to answer")
+            player_choice = int(input("1. Africlanker | 2. Alkebulan | 3. Alpaca: "))
+            if player_choice > 0 and player_choice < 4:
+                break
+            else:
+                print("Error. Please enter a number for the answers listed")
+        except ValueError:
+            print("Error. Please enter a number for the answers listed")
+    if player_choice == 1 or player_choice == 3:
+        print("")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    else:
+        questions_correct = questions_correct + 1
+        print("")
+        print("CORRECT. You have", questions_correct, "correct answer(s)")
+
+    print("")
+    print("QUESTION 2: Which of these animals is not native to Africa")
+    while True:
+        try:
+            print("Type the corresponding number to answer")
+            player_choice = int(input("1. Leopard | 2. Ostrich | 3. Tiger: "))
+            if player_choice > 0 and player_choice < 4:
+                break
+            else:
+                print("Error. Please enter a number for the answers listed")
+        except ValueError:
+            print("Error. Please enter a number for the answers listed")
+    if player_choice == 1 or player_choice == 2:
+        print("")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    else:
+        questions_correct = questions_correct + 1
+        print("")
+        print("CORRECT. You have", questions_correct, "correct answer(s)")
+
+    print("")
+    print("QUESTION 3: Approximately what percentage of Africa is desert?")
+    while True:
+        try:
+            print("Type the corresponding number to answer")
+            player_choice = int(input("1. 10% | 2. 40% | 3. 90%: "))
+            if player_choice > 0 and player_choice < 4:
+                break
+            else:
+                print("Error. Please enter a number for the answers listed")
+        except ValueError:
+            print("Error. Please enter a number for the answers listed")
+    if player_choice == 1 or player_choice == 3:
+        print("")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    else:
+        questions_correct = questions_correct + 1
+        print("")
+        print("CORRECT. You have", questions_correct, "correct answer(s)")
+
+    print("")
+    print("QUESTION 4: What is the most widely spoken language in Africa?")
+    while True:
+        try:
+            print("Type the corresponding number to answer")
+            player_choice = int(input("1. Swahili | 2. English | 3. Mandarin: "))
+            if player_choice > 0 and player_choice < 4:
+                break
+            else:
+                print("Error. Please enter a number for the answers listed")
+        except ValueError:
+            print("Error. Please enter a number for the answers listed")
+    if player_choice == 2 or player_choice == 3:
+        print("")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    else:
+        questions_correct = questions_correct + 1
+        print("")
+        print("CORRECT. You have", questions_correct, "correct answer(s)")
+
+    print("")
+    print("QUESTION 5: What is the estimated population of Africa?")
+    while True:
+        try:
+            print("Type the corresponding number to answer")
+            player_choice = int(input("1. 600M people | 2. 1.5B people | 3. 5B people: "))
+            if player_choice > 0 and player_choice < 4:
+                break
+            else:
+                print("Error. Please enter a number for the answers listed")
+        except ValueError:
+            print("Error. Please enter a number for the answers listed")
+    if player_choice == 1 or player_choice == 3:
+        print("")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    else:
+        questions_correct = questions_correct + 1
+        print("")
+        print("CORRECT. You have", questions_correct, "correct answer(s)")
+
+
 def room_1():   # This is the function for the first room of my escape room
     global player_stats
     global questions_correct
+    global inventory
+    global room_1_completed
     spacing()
     print("Welcome to Room 1")
     print("This room has a theme of Africa")
@@ -135,105 +243,54 @@ def room_1():   # This is the function for the first room of my escape room
     print("")
     print("WELCOME TO THE AFRICAN HISTORY QUIZ")
     print("YOU MUST GET 3 OUT OF 5 QUESTIONS CORRECT TO UNLOCK THE SECRET CODE")
-    print("")
-    print("QUESTION 1: What was the ancient name for the African continent?")
-    while True:
-        try:
-            print("Type the corresponding number to answer")
-            player_choice = int(input("1. Africlanker | 2. Alkebulan | 3. Alpaca: "))
-            if player_choice > 0 and player_choice < 4:
-                break
-            else:
-                print("Error. Please enter a number for the answers listed")
-        except ValueError:
-            print("Error. Please enter a number for the answers listed")
-    if player_choice == 1 or player_choice == 3:
-        print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+    quiz_room_1()
+    if questions_correct >= 3:
+        spacing()
+        print("CONGRATULATIONS YOU HAVE UNLOCKED THE SECRET CODE")
+        print("CODE: 4831")
+        inventory.append(4831)
     else:
-        questions_correct = questions_correct + 1
-        print("")
-        print("CORRECT. You have", questions_correct, "correct answer(s)")
+        spacing()
+        print("YOU HAVE NOT GOTTEN ENOUGH CORRECT QUESTIONS")
+        print("YOU MUST RETRY THE QUIZ")
+        quiz_room_1()
+        if questions_correct >= 3:
+            spacing()
+            print("CONGRATULATIONS YOU HAVE UNLOCKED THE SECRET CODE AFTER 2 TRIES")
+            print("CODE: 4831")
+            inventory.append(4831)
+        else:
+            spacing()
+            print("YOU HAVE FAILED THE QUIZ TWICE")
+            print("YOU HAVE ONE MORE ATTEMPT TO PASS THE QUIZ OTHERWISE YOU WILL DIE")
+            quiz_room_1()
+            if questions_correct >= 3:
+                spacing()
+                print("CONGRATULATIONS YOU HAVE FINALLY PASSED THE QUIZ")
+                print("CODE: 4831")
+                inventory.append(4831)
+            else:
+                spacing()
+                print("YOU HAVE FAILED AGAIN AND NOW WILL DIE")
+                print("")
+                player_stats["Health"] = 0
+    spacing()
+    print("You have obtained the secret code")
+    print("You open your phone and start typing in the code")
+    print(inventory[0])
+    print("Your phone starts shaking and the world around you starts to fall apart")
+    print("The ground underneath you starts breaking and you fall into a void")
+    room_1_completed = True
 
-    print("")
-    print("QUESTION 2: Which of these animals is not native to Africa")
-    while True:
-        try:
-            print("Type the corresponding number to answer")
-            player_choice = int(input("1. Leopard | 2. Ostrich | 3. Tiger: "))
-            if player_choice > 0 and player_choice < 4:
-                break
-            else:
-                print("Error. Please enter a number for the answers listed")
-        except ValueError:
-            print("Error. Please enter a number for the answers listed")
-    if player_choice == 1 or player_choice == 2:
-        print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
-    else:
-        questions_correct = questions_correct + 1
-        print("")
-        print("CORRECT. You have", questions_correct, "correct answer(s)")
-
-    print("")
-    print("QUESTION 3: Approximately what percentage of Africa is desert?")
-    while True:
-        try:
-            print("Type the corresponding number to answer")
-            player_choice = int(input("1. 10% | 2. 40% | 3. 90%: "))
-            if player_choice > 0 and player_choice < 4:
-                break
-            else:
-                print("Error. Please enter a number for the answers listed")
-        except ValueError:
-            print("Error. Please enter a number for the answers listed")
-    if player_choice == 1 or player_choice == 3:
-        print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
-    else:
-        questions_correct = questions_correct + 1
-        print("")
-        print("CORRECT. You have", questions_correct, "correct answer(s)")
-
-    print("")
-    print("QUESTION 4: What is the most widely spoken language in Africa?")
-    while True:
-        try:
-            print("Type the corresponding number to answer")
-            player_choice = int(input("1. Swahili | 2. English | 3. Mandarin: "))
-            if player_choice > 0 and player_choice < 4:
-                break
-            else:
-                print("Error. Please enter a number for the answers listed")
-        except ValueError:
-            print("Error. Please enter a number for the answers listed")
-    if player_choice == 2 or player_choice == 3:
-        print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
-    else:
-        questions_correct = questions_correct + 1
-        print("")
-        print("CORRECT. You have", questions_correct, "correct answer(s)")
-
-    print("")
-    print("QUESTION 5: ")
-    while True:
-        try:
-            print("Type the corresponding number to answer")
-            player_choice = int(input("1. 10% | 2. 40% | 3. 90%: "))
-            if player_choice > 0 and player_choice < 4:
-                break
-            else:
-                print("Error. Please enter a number for the answers listed")
-        except ValueError:
-            print("Error. Please enter a number for the answers listed")
-    if player_choice == 1 or player_choice == 3:
-        print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
-    else:
-        questions_correct = questions_correct + 1
-        print("")
-        print("CORRECT. You have", questions_correct, "correct answer(s)")
+def room_2():
+    global room_2_completed
+    spacing()
+    print("Welcome to room 2")
+    print("You fell into the void and landed on the coastline of what seems to be Japan")
+    print("This room has the theme of Japan")
+    print("Find the code to escape. Good luck")
+    spacing()
+    time.sleep(1)
 
 
 
@@ -241,10 +298,19 @@ starting_sequence()
 time.sleep(2)
 menu()
 time.sleep(0.5)
-if playing == True:
+while playing == True:
     spacing()
     display_player_stats()
-    room_1()
-else:
-    spacing()
-    print("Come back and play again another time")
+    while player_stats["Health"] > 0:
+        if room_1_completed == False:
+            room_1()
+        if room_2_completed == False:
+            room_2()
+
+    print("You have died...")
+    print("You were not able to escape")
+    playing = False
+
+spacing()
+print("Come back and play again another time")
+

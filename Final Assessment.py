@@ -251,6 +251,7 @@ def room_1():   # This is the function for the first room of my escape room
         print("CODE: 4831")
         inventory.append(4831)
     else:
+        questions_correct = 0
         spacing()
         print("YOU HAVE NOT GOTTEN ENOUGH CORRECT QUESTIONS")
         print("YOU MUST RETRY THE QUIZ")
@@ -261,6 +262,7 @@ def room_1():   # This is the function for the first room of my escape room
             print("CODE: 4831")
             inventory.append(4831)
         else:
+            questions_correct = 0
             spacing()
             print("YOU HAVE FAILED THE QUIZ TWICE")
             print("YOU HAVE ONE MORE ATTEMPT TO PASS THE QUIZ OTHERWISE YOU WILL DIE")
@@ -271,17 +273,19 @@ def room_1():   # This is the function for the first room of my escape room
                 print("CODE: 4831")
                 inventory.append(4831)
             else:
+                questions_correct = 0
                 spacing()
                 print("YOU HAVE FAILED AGAIN AND NOW WILL DIE")
                 print("")
                 player_stats["Health"] = 0
     spacing()
-    print("You have obtained the secret code")
-    print("You open your phone and start typing in the code")
-    print(inventory[0])
-    print("Your phone starts shaking and the world around you starts to fall apart")
-    print("The ground underneath you starts breaking and you fall into a void")
-    room_1_completed = True
+    if questions_correct >= 3:
+        print("You have obtained the secret code")
+        print("You open your phone and start typing in the code")
+        print("4831")
+        print("Your phone starts shaking and the world around you starts to fall apart")
+        print("The ground underneath you starts breaking and you fall into a void")
+        room_1_completed = True
 
 def room_2():
     global room_2_completed
@@ -304,9 +308,9 @@ while playing == True:
     spacing()
     display_player_stats()
     while player_stats["Health"] > 0:
-        if room_1_completed == False:
+        if room_1_completed == False and player_stats["Health"] > 0:
             room_1()
-        if room_2_completed == False:
+        if room_2_completed == False and player_stats["Health"] > 0:
             room_2()
 
     print("You have died...")

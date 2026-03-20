@@ -8,7 +8,7 @@ questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
 room_2_completed = False
 playing = True
-
+room_2_board = []
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
@@ -290,6 +290,8 @@ def room_1():   # This is the function for the first room of my escape room
 def room_2():
     global room_2_completed
     spacing()
+    display_player_stats()
+    spacing()
     time.sleep(2)
     print("Welcome to room 2")
     print("You fell into the void and landed on the coastline of what seems to be Japan")
@@ -297,6 +299,13 @@ def room_2():
     print("Find the code to escape. Good luck")
     spacing()
     time.sleep(1)
+    print("You start walking across the beach and see a bunch of sticks on the ground in a pattern")
+    print("The pattern resembles a tic tac toe board")
+    print("The man who you saw in room 1 walks up behind you and asks if you want to play the game with him")
+    print("You don't know if you should play or not but as he helped you in room 1, you decide to play him")
+    while True:
+
+
 
 
 

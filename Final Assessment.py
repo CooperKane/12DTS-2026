@@ -304,6 +304,8 @@ def room_2():
     print("The man who you saw in room 1 walks up behind you and asks if you want to play the game with him")
     print("You don't know if you should play or not but as he helped you in room 1, you decide to play him")
     while True:
+        #Add the tic tac toe game here
+
 
 
 
@@ -328,4 +330,3 @@ while playing == True:
 
 spacing()
 print("Come back and play again another time")
-

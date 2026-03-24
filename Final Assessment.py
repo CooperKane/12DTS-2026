@@ -3,7 +3,6 @@ import time
 
 player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
 inventory = []   # This is where any items that the player collects will be stored
-play_game = 0
 questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
 room_2_completed = False

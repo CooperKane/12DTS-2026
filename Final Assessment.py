@@ -1,14 +1,15 @@
+
 import random
 import time
 
 player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
 inventory = []   # This is where any items that the player collects will be stored
-play_game = 0
 questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
 room_2_completed = False
 playing = True
 room_2_board = []
+ttt_result = 0
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
@@ -156,6 +157,72 @@ def quiz_room_1():
         print("")
         print("CORRECT. You have", questions_correct, "correct answer(s)")
 
+def display_board(room_2_board):    # This function will display the tic tac toe board for room 2
+    print("")
+    print(room_2_board[0], "|", room_2_board[1], "|", room_2_board[2])
+    print(room_2_board[3], "|", room_2_board[4], "|", room_2_board[5])
+    print(room_2_board[6], "|", room_2_board[7], "|", room_2_board[8])
+    print("")
+
+def room_2_check_winner(room_2_board, X_or_O):  # This function will check if the player or computer has won yet in room 2
+    winning_combinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]     # These are all of the possible winning combinations for the player and the computer
+    for combination in winning_combinations:
+        if room_2_board[combination[0]] == room_2_board[combination[1]] == room_2_board[combination[2]] == X_or_O:
+            return True
+    return False
+
+def tic_tac_toe():      # This function will be the tic tac toe game in room 2
+    global room_2_board
+    global ttt_result
+    for i in range(9):
+        room_2_board.append(i + 1)
+    display_board(room_2_board)
+    print("Your pieces are Xs. The mans pieces are Os")
+    time.sleep(1)
+
+
+    for turn in range(9):
+        if turn == 0 or turn == 2 or turn == 4 or turn == 6 or turn == 8:
+            print("Your turn...")
+            while True:
+                try:
+                    player_move = int(input("Choose your position from 1-9: "))
+                    if player_move < 1 or player_move > 9:
+                        print("Error. Please choose a number from 1-9")
+                    elif room_2_board[player_move - 1] == "X" or room_2_board[player_move - 1] == "O":
+                        print("Error. That position is already taken. Please choose another position")
+                    else:
+                        room_2_board[player_move - 1] = "X"
+                        break
+                except ValueError:
+                    print("Error. Please choose a number from 1-9")
+            display_board(room_2_board)
+
+            if room_2_check_winner(room_2_board, "X"):      # This will check if the player has won the tic tac toe and change the ttt_result to win if they have
+                print("You win!")
+                ttt_result = "win"
+                return
+
+        else:
+            print("Man's Turn...")
+            time.sleep(1)
+            spots_left = []
+            for i in range(9):     # This part will make sure the man only picks a spot on the board which isn't taken by the player
+                if room_2_board[i] != "X" and room_2_board[i] != "O":
+                    spots_left.append(i)
+            opponent_move = random.choice(spots_left)   # The man will randomly choose from one of the remaining spots
+            room_2_board[opponent_move] = "O"
+            display_board(room_2_board)
+
+            if room_2_check_winner(room_2_board, "O"):  # This part will make the player lose if the opponent has won
+                print("You lose!")
+                ttt_result = "lose"
+                return
+
+    display_board(room_2_board)     # This part will make the game a draw if the player or opponent don't win
+    print("Draw!")
+    ttt_result = "draw"
+    return
 
 def room_1():   # This is the function for the first room of my escape room
     global player_stats
@@ -289,6 +356,7 @@ def room_1():   # This is the function for the first room of my escape room
 
 def room_2():
     global room_2_completed
+    global ttt_result
     spacing()
     display_player_stats()
     spacing()
@@ -303,9 +371,13 @@ def room_2():
     print("The pattern resembles a tic tac toe board")
     print("The man who you saw in room 1 walks up behind you and asks if you want to play the game with him")
     print("You don't know if you should play or not but as he helped you in room 1, you decide to play him")
-    while True:
-        #Add the tic tac toe game here
-
+    tic_tac_toe()
+    if ttt_result == "win":
+        print("Player has won the tic tac toe")
+    elif ttt_result == "lose":
+        print("Player has lost the tic tac toe")
+    else:
+        print("Player has drawn the tic tac toe")
 
 
 

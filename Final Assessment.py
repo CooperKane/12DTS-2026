@@ -316,10 +316,11 @@ def room_1():   # This is the function for the first room of my escape room
     if questions_correct >= 3:
         spacing()
         print("CONGRATULATIONS YOU HAVE UNLOCKED THE SECRET CODE")
-        print("CODE: 4831")
-        inventory.append(4831)
+        print("CODE: 4830")
+        inventory.append(4830)
     else:
         questions_correct = 0
+        player_stats["Brainpower"] -= 10
         spacing()
         print("YOU HAVE NOT GOTTEN ENOUGH CORRECT QUESTIONS")
         print("YOU MUST RETRY THE QUIZ")
@@ -327,10 +328,11 @@ def room_1():   # This is the function for the first room of my escape room
         if questions_correct >= 3:
             spacing()
             print("CONGRATULATIONS YOU HAVE UNLOCKED THE SECRET CODE AFTER 2 TRIES")
-            print("CODE: 4831")
-            inventory.append(4831)
+            print("CODE: 4830")
+            inventory.append(4830)
         else:
             questions_correct = 0
+            player_stats["Brainpower"] -= 10
             spacing()
             print("YOU HAVE FAILED THE QUIZ TWICE")
             print("YOU HAVE ONE MORE ATTEMPT TO PASS THE QUIZ OTHERWISE YOU WILL DIE")
@@ -338,8 +340,8 @@ def room_1():   # This is the function for the first room of my escape room
             if questions_correct >= 3:
                 spacing()
                 print("CONGRATULATIONS YOU HAVE FINALLY PASSED THE QUIZ")
-                print("CODE: 4831")
-                inventory.append(4831)
+                print("CODE: 4830")
+                inventory.append(4830)
             else:
                 questions_correct = 0
                 spacing()
@@ -374,11 +376,80 @@ def room_2():
     print("You don't know if you should play or not but as he helped you in room 1, you decide to play him")
     tic_tac_toe()
     if ttt_result == "win":
-        print("Player has won the tic tac toe")
+        print("")
+        print("You have won the tic tac toe game against the mysterious man")
+        print("He smiles at you and says 'Congratulations, you really are better at these games than I thought'")
+        print("The man pulls a piece of paper out of his pocket and hands it to you")
+        time.sleep(1)
+        print("The paper has 2 numbers on it followed by 2 empty spaces")
+        print("You assume it must be the code to escape the second room")
+        print("Before you can say anything else, you look up at the man and he has disappeared")
+        print("24__")
+        inventory.append(2400)      # The 0s fill in the empty 2 numbers
     elif ttt_result == "lose":
-        print("Player has lost the tic tac toe")
+        print("You have lost the tic tac toe game against the mysterious man")
+        print("He laughs and says 'Well that was a good game, shame you couldn't beat me")
+        print("He pulls out a piece of paper with numbers on it, which you assume must be the code to escape the second room")
+        print("Before you can react, the man pulls out a lighter and burns the paper to ashes")
+        print("'Good luck' the man says before disappearing before your eyes")
     else:
-        print("Player has drawn the tic tac toe")
+        print("You have drawn the tic tac toe game against the mysterious man")
+        print("He lets out a deep breath and says 'What an exciting game'")
+        print("You shrug, disappointed in your loss, but the man tells you one thing before vanishing")
+        print("The man quickly says 'remember this number, it might be of use to you. 2'")
+        print("You don't know for sure what to do with this information, but you piece together that it must be the first number in the code to escape the second room")
+        inventory.append(2000)      # The 0s fill in the empty 3 numbers
+    spacing()
+    print("After your game with the mysterious man, you start looking around the beach again and in the distance you see some light")
+    while True:
+        try:
+            print("")
+            print("Would you like to go towards the light, or keep searching around the beach")
+            player_choice = int(input("1. Go to the light | 2. Keep searching the beach"))
+            if player_choice == 1 or player_choice == 2:
+                break
+            else:
+                print("Error. Please enter a number either 1 or 2")
+        except ValueError:
+            print("Error. Please enter a number either 1 or 2")
+    if player_choice == 1:
+        print("You choose to follow the light and as you walk you notice that the light is coming from a small village")
+        print("As you approach the village, what seems to be a samurai guard notices you and yells out a signal to the village warning them")
+        print("You try to explain that you come in peace and mean no harm but before you can explain yourself, many other samurai surround you")
+        while True:
+            try:
+                print("")
+                print("What would you like to do?")
+                player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village "))
+                if player_choice < 1 or player_choice > 3:
+                    print("Error. Please enter a number from 1 to 3")
+                else:
+                    break
+            except ValueError:
+                print("Error. Please enter a number from 1 to 3")
+        if player_choice == 1:
+            print("")
+            print("You start sprinting away from the village as fast as you can without looking behind at all")
+            random_chance = random.randint(1, 2)
+            if random_chance == 1:
+                print("The samurais watch you run away with a smile on their faces")
+                print("They trust that you will not come back, so they leave you alone")
+                print("")
+                print("Exhausted from running, you don't see where you're going in the dark night and you end up walking straight into a tree, where your already weak body gives up and you pass out")
+                spacing()
+            else:
+                print("The samurais split up and chase after you in different directions")
+                print("You don't see any way to run from them on land, so you run to the ocean and start swimming away")
+                print("")
+                print("The samurais, pleased with their work of running you out of their territory, go back to the village, but remain vigilant on lookout")
+                print("Meanwhile, you have drained all of your energy while running away, and swimming against the current of the ocean becomes impossible")
+                print("The last thing you remember is hearing the loud horn of a passing ship before you pass out")
+                spacing()
+            print("You wake up again in the morning, now in a bed in a room which looks to be in someone's home")
+            print("You get up and see a family in the living room of the home")
+            print("'I was wondering when you would wake up'")
+            print("You look around in confusion and think to yourself. Where am I? Who are these people?")
+
 
 
 

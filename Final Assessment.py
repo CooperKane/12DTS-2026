@@ -432,12 +432,14 @@ def room_2():
             print("You start sprinting away from the village as fast as you can without looking behind at all")
             random_chance = random.randint(1, 2)
             if random_chance == 1:
+                print("")
                 print("The samurais watch you run away with a smile on their faces")
                 print("They trust that you will not come back, so they leave you alone")
                 print("")
                 print("Exhausted from running, you don't see where you're going in the dark night and you end up walking straight into a tree, where your already weak body gives up and you pass out")
                 spacing()
             else:
+                print("")
                 print("The samurais split up and chase after you in different directions")
                 print("You don't see any way to run from them on land, so you run to the ocean and start swimming away")
                 print("")
@@ -449,6 +451,7 @@ def room_2():
             print("You get up and see a family in the living room of the home")
             print("'I was wondering when you would wake up'")
             print("You look around in confusion and think to yourself. Where am I? Who are these people?")
+
 
 
 

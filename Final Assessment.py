@@ -352,7 +352,7 @@ def room_1():   # This is the function for the first room of my escape room
     if questions_correct >= 3:
         print("You have obtained the secret code")
         print("You open your phone and start typing in the code")
-        print("4831")
+        print("4830")
         print("Your phone starts shaking and the world around you starts to fall apart")
         print("The ground underneath you starts breaking and you fall into a void")
         room_1_completed = True
@@ -360,6 +360,8 @@ def room_1():   # This is the function for the first room of my escape room
 def room_2():
     global room_2_completed
     global ttt_result
+    global player_stats
+    global inventory
     spacing()
     display_player_stats()
     spacing()
@@ -451,6 +453,39 @@ def room_2():
             print("You get up and see a family in the living room of the home")
             print("'I was wondering when you would wake up'")
             print("You look around in confusion and think to yourself. Where am I? Who are these people?")
+            print("While looking around, you see the mysterious man again, now in the living room")
+            print("You walk towards him and ask where you are but he just smiles and walks out of the house")
+            print("You follow him out to a table where he has set out a deck of cards")
+            print("")
+            print("The man tells you if you can beat him in a game of blackjack, he will give you the remaining part of the code to escape room 2")
+            # Add blackjack game here
+
+        elif player_choice == 2:
+            print("")
+            print("You start shouting at the samurai one by one yelling that they are weak and must stand down now otherwise you will unleash your wrath")
+            if player_stats["Strength"] >= 90:
+                time.sleep(1)
+                print("The samurais look at each other and then at you")
+                print("All at once they agree to stand down, intimidated by your aura")
+                print("They give you free access to the village and all of its resources")
+                print("")
+                time.sleep(2)
+                print("You go into the village and notice each house has a number on it either 2 or 4")
+                if inventory[1] == 2400:
+                    print("You see two houses in front of you with the numbers 1 and 5")
+                    print("As you have no better idea of what to do, you decide to type a code into your phone with the 24 from before, and now the 15 you noticed")
+                    print("You type it into your phone slowly...")
+                    print("2415")
+                    time.sleep(1)
+                    print("...")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                    room_2_completed = True
+                else:
+                    time.sleep(1)
+
+
 
 
 

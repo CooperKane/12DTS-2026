@@ -28,7 +28,7 @@ def display_player_stats():   # This shows the player's stats, and will be used 
     print("Health:", player_stats["Health"])
     print("Speed:", player_stats["Speed"])
     print("Brainpower", player_stats["Brainpower"])
-    print("Strengh", player_stats["Strength"])
+    print("Strength", player_stats["Strength"])
 
 def menu():   # This is a simple menu that the player can use to play the game or not play the game
     global playing
@@ -407,7 +407,7 @@ def room_2():
         try:
             print("")
             print("Would you like to go towards the light, or keep searching around the beach")
-            player_choice = int(input("1. Go to the light | 2. Keep searching the beach"))
+            player_choice = int(input("1. Go to the light | 2. Keep searching the beach: "))
             if player_choice == 1 or player_choice == 2:
                 break
             else:
@@ -422,7 +422,7 @@ def room_2():
             try:
                 print("")
                 print("What would you like to do?")
-                player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village "))
+                player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village: "))
                 if player_choice < 1 or player_choice > 3:
                     print("Error. Please enter a number from 1 to 3")
                 else:
@@ -465,6 +465,7 @@ def room_2():
             print("You start shouting at the samurai one by one yelling that they are weak and must stand down now otherwise you will unleash your wrath")
             if player_stats["Strength"] >= 90:
                 time.sleep(1)
+                print("")
                 print("The samurais look at each other and then at you")
                 print("All at once they agree to stand down, intimidated by your aura")
                 print("They give you free access to the village and all of its resources")
@@ -472,6 +473,7 @@ def room_2():
                 time.sleep(2)
                 print("You go into the village and notice each house has a number on it either 2 or 4")
                 if inventory[1] == 2400:
+                    time.sleep(1)
                     print("You see two houses in front of you with the numbers 1 and 5")
                     print("As you have no better idea of what to do, you decide to type a code into your phone with the 24 from before, and now the 15 you noticed")
                     print("You type it into your phone slowly...")
@@ -481,9 +483,27 @@ def room_2():
                     time.sleep(2)
                     print("Code accepted.")
                     print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
                     room_2_completed = True
                 else:
                     time.sleep(1)
+                    print("You see three houses in front of you with the numbers 4, 1 and 5")
+                    print("As you have no better idea of what to do, you decide to type a code into your phone with the 2 from before, and now the 415 you noticed")
+                    print("You type it into your phone slowly...")
+                    print("2415")
+                    time.sleep(1)
+                    print("...")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
+                    room_2_completed = True
+            else:
+                print("")
+                time.sleep(1)
+                print("The samurai look at each other, and then start attacking you")
+                print("")
+
 
 
 

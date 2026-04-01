@@ -11,6 +11,7 @@ room_2_completed = False
 playing = True
 room_2_board = []
 ttt_result = 0
+blackjack_winner = 0
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
@@ -224,6 +225,53 @@ def tic_tac_toe():      # This function will be the tic tac toe game in room 2
     print("Draw!")
     ttt_result = "draw"
     return
+
+def blackjack():
+    global blackjack_winner
+    player_hand = [random.randint(1, 11), random.randint(1, 10)]
+    man_hand = [random.randint(1, 11), random.randint(1, 10)]
+    spacing()
+    print("Man's first card: ", man_hand[0])
+    print("Your cards: ", player_hand)
+    print("Your hand value: ", sum(player_hand))
+    player_choice = "y"
+    while sum(player_hand) < 21 and player_choice == "y":
+        while True:
+            try:
+                player_choice = input("Would you like to hit? (Y/N): ").lower()
+                if player_choice == "y" or player_choice == "n":
+                    break
+                else:
+                    print("Error. Please choose either Y or N")
+            except ValueError:
+                print("Error. Please choose either Y or N")
+        if player_choice == "n":
+            break
+
+        player_hand.append(random.randint(1, 10))
+        print("Your cards: ", player_hand)
+        print("Your hand value: ", sum(player_hand))
+        print("")
+
+    if sum(player_hand) > 21:
+        print("Bust! You lose.")
+        blackjack_winner = "Lose"
+    else:
+        while sum(man_hand) < 17:
+            man_hand.append(random.randint(1, 10))
+        print("Man's hand: ", man_hand)
+        print("Man's hand value: ", sum(man_hand))
+        if sum(man_hand) > 21 or sum(player_hand) > sum(man_hand):
+            print("You win!")
+            blackjack_winner = "Win"
+        elif sum(player_hand) < sum(man_hand):
+            print("You lose!")
+            blackjack_winner = "Lose"
+        else:
+            print("Tie")
+            blackjack_winner = "Tie"
+
+
 
 def room_1():   # This is the function for the first room of my escape room
     global player_stats
@@ -458,7 +506,13 @@ def room_2():
             print("You follow him out to a table where he has set out a deck of cards")
             print("")
             print("The man tells you if you can beat him in a game of blackjack, he will give you the remaining part of the code to escape room 2")
-            # Add blackjack game here
+            blackjack()
+            if blackjack_winner == "Tie":
+                spacing()
+            elif blackjack_winner == "Lose":
+                spacing()
+            else:
+                spacing()
 
         elif player_choice == 2:
             print("")

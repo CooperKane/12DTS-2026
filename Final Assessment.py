@@ -1,17 +1,24 @@
-    # Vihaan Kapoor Final Assessment 91896
+    #----------Vihaan Kapoor Final Assessment 91896----------
+
+#IMPORTS
 
 import random
 import time
+
+#VARIABLES
 
 player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
 inventory = []   # This is where any items that the player collects will be stored
 questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
 room_2_completed = False
+room_3_completed = False
 playing = True
 room_2_board = []
 ttt_result = 0
 blackjack_winner = 0
+
+#FUNCTIONS
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
@@ -282,7 +289,7 @@ def blackjack():        # This will be used in the second room
 
 def room_1():   # This is the function for the first room of my escape room
     global player_stats
-    global questions_correct
+    global questions_correct         # Making a few variables global as they will be changed in the room
     global inventory
     global room_1_completed
     spacing()
@@ -418,7 +425,7 @@ def room_1():   # This is the function for the first room of my escape room
 
 def room_2():       # This function will run the second room of the game
     global room_2_completed
-    global ttt_result
+    global ttt_result        # Making a few variables global as they will be changed in the room
     global player_stats
     global inventory
     spacing()
@@ -463,217 +470,303 @@ def room_2():       # This function will run the second room of the game
         inventory.append(2000)      # The 0s fill in the empty 3 numbers
     spacing()
     print("After your game with the mysterious man, you start looking around the beach again and in the distance you see some light")
+    print("")
+    print("You decide to follow the light and as you walk you notice that the light is coming from a small village")
+    print("As you approach the village, what seems to be a samurai guard notices you and yells out a signal to the village warning them")
+    print("You try to explain that you come in peace and mean no harm but before you can explain yourself, many other samurai surround you")
     while True:
         try:
             print("")
-            print("Would you like to go towards the light, or keep searching around the beach")
-            player_choice = int(input("1. Go to the light | 2. Keep searching the beach: "))
-            if player_choice == 1 or player_choice == 2:
-                break
-            else:
-                print("Error. Please enter a number either 1 or 2")
-        except ValueError:
-            print("Error. Please enter a number either 1 or 2")
-    if player_choice == 1:      # This is when the player chooses to go to the light
-        print("")
-        print("You choose to follow the light and as you walk you notice that the light is coming from a small village")
-        print("As you approach the village, what seems to be a samurai guard notices you and yells out a signal to the village warning them")
-        print("You try to explain that you come in peace and mean no harm but before you can explain yourself, many other samurai surround you")
-        while True:
-            try:
-                print("")
-                print("What would you like to do?")
-                player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village: "))
-                if player_choice < 1 or player_choice > 3:
-                    print("Error. Please enter a number from 1 to 3")
-                else:
-                    break
-            except ValueError:
+            print("What would you like to do?")
+            player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village: "))
+            if player_choice < 1 or player_choice > 3:
                 print("Error. Please enter a number from 1 to 3")
-        if player_choice == 1:      # This is when the player chooses to run away from the village
-            print("")
-            print("You start sprinting away from the village as fast as you can without looking behind at all")
-            random_chance = random.randint(1, 2)    # This will give the player a 50/50 if they get left alone or they get chased
-            if random_chance == 1:
-                print("")
-                print("The samurais watch you run away with a smile on their faces")
-                print("They trust that you will not come back, so they leave you alone")
-                print("")
-                print("Exhausted from running, you don't see where you're going in the dark night and you end up walking straight into a tree, where your already weak body gives up and you pass out")
-                spacing()
             else:
-                print("")
-                print("The samurais split up and chase after you in different directions")
-                print("You don't see any way to run from them on land, so you run to the ocean and start swimming away")
-                print("")
-                print("The samurais, pleased with their work of running you out of their territory, go back to the village, but remain vigilant on lookout")
-                print("Meanwhile, you have drained all of your energy while running away, and swimming against the current of the ocean becomes impossible")
-                print("The last thing you remember is hearing the loud horn of a passing ship before you pass out")
-                spacing()
-            print("You wake up again in the morning, now in a bed in a room which looks to be in someone's home")
-            print("You get up and see a family in the living room of the home")
-            print("'I was wondering when you would wake up'")
-            print("You look around in confusion and think to yourself. Where am I? Who are these people?")
-            print("While looking around, you see the mysterious man again, now in the living room")
-            print("You walk towards him and ask where you are but he just smiles and walks out of the house")
-            print("You follow him out to a table where he has set out a deck of cards")
+                break
+        except ValueError:
+            print("Error. Please enter a number from 1 to 3")
+    if player_choice == 1:      # This is when the player chooses to run away from the village
+        print("")
+        print("You start sprinting away from the village as fast as you can without looking behind at all")
+        random_chance = random.randint(1, 2)    # This will give the player a 50/50 if they get left alone or they get chased
+        if random_chance == 1:
             print("")
-            print("The man tells you if you can beat him in a game of blackjack, he will give you the remaining part of the code to escape room 2")
-            blackjack()
-            if blackjack_winner == "Tie":
-                spacing()
-                print("The man shrugs at the tie, but liked the amount of effort you put in")
-                print("He decides to give you a hint on what the ")
-            elif blackjack_winner == "Lose":
-                spacing()
-            else:
-                spacing()
-
-        elif player_choice == 2:
+            print("The samurais watch you run away with a smile on their faces")
+            print("They trust that you will not come back, so they leave you alone")
             print("")
-            print("You start shouting at the samurai one by one yelling that they are weak and must stand down now otherwise you will unleash your wrath")
-            if player_stats["Strength"] >= 90:
-                time.sleep(1)
-                print("")
-                print("The samurais look at each other and then at you")
-                print("All at once they agree to stand down, intimidated by your aura")
-                print("They give you free access to the village and all of its resources")
-                print("")
-                time.sleep(2)
-                print("You go into the village and notice each house has a number on it either 2 or 4")
-                if inventory[1] == 2400:
-                    time.sleep(1)
-                    print("You see two houses in front of you with the numbers 1 and 5")
-                    print("As you have no better idea of what to do, you decide to type a code into your phone with the 24 from before, and now the 15 you noticed")
-                    print("You type it into your phone slowly...")
-                    print("2415")
-                    time.sleep(1)
-                    print("...")
-                    time.sleep(2)
-                    print("Code accepted.")
-                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
-                    inventory[1] = 2415
-                    room_2_completed = True
-                else:
-                    time.sleep(1)
-                    print("You see three houses in front of you with the numbers 4, 1 and 5")
-                    print("As you have no better idea of what to do, you decide to type a code into your phone with the 2 from before, and now the 415 you noticed")
-                    print("You type it into your phone slowly...")
-                    print("2415")
-                    time.sleep(1)
-                    print("...")
-                    time.sleep(2)
-                    print("Code accepted.")
-                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
-                    inventory[1] = 2415
-                    room_2_completed = True
-            else:
-                print("")
-                time.sleep(1)
-                print("The samurai look at each other, and then start attacking you")
-                print("")
-                print("You try attacking them back, but they overpower you")
-                player_stats["Health"] -= 20
-                player_stats["Strength"] -= 20
-                time.sleep(1)
-                print("")
-                print("After pinning you down to the ground, the lead samurai asks you 'What are you doing here?'")
-                print("You explain how you are just looking for a code, and wish to be out of their way after you get it")
-                time.sleep(1)
-                print("The samurai look confused, as they do not know what this code is")
-                print("")
-                print("Thinking quickly, you decide to try and distract the samurai by telling them theres a flying piece of sushi in the distance")
-                spacing()
-                print("The gullible samurai actually decide to look at where you're pointing and you take the opportunity to run past them into the village")
-                time.sleep(3)
-                spacing()
-                print("You enter the village, and immediately start searching for clues to the code")
-                print("")
-                while True:
-                    try:
-                        print("Where would you like to search?")
-                        player_choice = int(input("1. Count every blade of grass in a garden | 2. Ask every person there until you get a code: "))
-                        if player_choice == 1 or player_choice == 2:
-                            break
-                        else:
-                            print("Error. Please enter either 1 or 2")
-                    except ValueError:
-                        print("Error. Please enter either 1 or 2")
-                if player_choice == 1:
-                    print("")
-                    print("You decide to count every blade of grass in a garden")
-                    print("After counting for many hours, you finally land on a number of 2415")
-                    print("Everyone in the village watches you confused as to what you could possibly be doing but you ignore them and type the numbers into your phone")
-                    print("")
-                    time.sleep(1)
-                    print("2415")
-                    time.sleep(1)
-                    print("...")
-                    time.sleep(2)
-                    print("Code accepted.")
-                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
-                    inventory[1] = 2415
-                    room_2_completed = True
-                elif player_choice == 2:
-                    print("")
-                    random_chance = random.randint(1,50)
-                    print("After asking", random_chance, "people, you finally get the code: 2415")
-                    print("Due to asking all of these people, your brainpower has dropped")
-                    print("Your brainpower has dropped", random_chance, "points to", player_stats["Brainpower"] - random_chance)
-                    player_stats["Brainpower"] -= random_chance
-                    spacing()
-                    time.sleep(2)
-                    print("You start typing the code into your phone")
-                    print("")
-                    print("2415")
-                    time.sleep(1)
-                    print("...")
-                    time.sleep(2)
-                    print("Code accepted.")
-                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
-                    inventory[1] = 2415
-                    room_2_completed = True
+            print("Exhausted from running, you don't see where you're going in the dark night and you end up walking straight into a tree, where your already weak body gives up and you pass out")
+            spacing()
         else:
             print("")
-            time.sleep(1)
-            print("You try running through the samurai but get stopped immediately by a katana")
-            print("You look down, and a katana has gone through your chest and you fall down onto the ground defeated")
-            time.sleep(2)
-            print("While the samurais walk away, you see a 4 digit code on the back of all of their clothes reading 2415")
+            print("The samurais split up and chase after you in different directions")
+            print("You don't see any way to run from them on land, so you run to the ocean and start swimming away")
             print("")
-            print("With no other option, you quickly take your phone out and frantically start typing out the code...")
+            print("The samurais, pleased with their work of running you out of their territory, go back to the village, but remain vigilant on lookout")
+            print("Meanwhile, you have drained all of your energy while running away, and swimming against the current of the ocean becomes impossible")
+            print("The last thing you remember is hearing the loud horn of a passing ship before you pass out")
+            spacing()
+        print("You wake up again in the morning, now in a bed in a room which looks to be in someone's home")
+        print("You get up and see a family in the living room of the home")
+        print("'I was wondering when you would wake up'")
+        print("You look around in confusion and think to yourself. Where am I? Who are these people?")
+        print("While looking around, you see the mysterious man again, now in the living room")
+        print("You walk towards him and ask where you are but he just smiles and walks out of the house")
+        print("You follow him out to a table where he has set out a deck of cards")
+        print("")
+        print("The man tells you if you can beat him in a game of blackjack, he will give you the remaining part of the code to escape room 2")
+        blackjack()
+        if blackjack_winner == "Tie":
+            spacing()
+            print("The man shrugs at the tie, but liked the amount of effort you put in")
+            print("He decides to give you a hint on what the code is")
+            print("")
+            print("The hint is: take half of the first rooms number and you'll see what you need")
+            print("")
+            print("You look into your inventory and see: 4830")
+            print("You use your quick maths skills and figure out that the code must be 2415")
+            print("")
             time.sleep(2)
-            random_chance = random.randint(1,3)
-            if random_chance == 1:
+            print("You take out your phone and start typing the code in")
+            print("")
+            print("2415")
+            print("")
+            time.sleep(2)
+            print("Code accepted.")
+            print("Your phone starts shaking and you prepare to be teleported to the final room")
+            inventory[1] = 2415
+            room_2_completed = True
+
+        elif blackjack_winner == "Lose":
+            spacing()
+            print("The man feels bad for beating you, so he decides to give you a hint")
+            time.sleep(1)
+            print("")
+            print("'Half'")
+            print("")
+            time.sleep(2)
+            print("You think for a second before realising that maybe half means half of the code that you got from the first room")
+            print("You remember the code is 4830")
+            print("")
+            if player_stats["Brainpower"] >= 60
+                print("As you are smart, you figure out that the code must be 2415")
                 print("")
-                print("You type in 2415 and hit enter")
+                time.sleep(2)
+                print("You take out your phone and start typing the code in")
                 print("")
-                time.sleep(1)
+                print("2415")
+                print("")
+                time.sleep(2)
                 print("Code accepted.")
                 print("Your phone starts shaking and you prepare to be teleported to the final room")
                 inventory[1] = 2415
                 room_2_completed = True
             else:
+                print("As you aren't very smart, you have to try and guess the number")
+                print("You narrow it down to either 2415, 2345, or 8860")
+                while True:
+                    try:
+                        player_choice = int(input("What would you like to guess? 1. 2415 | 2. 2345 | 3. 8860"))
+                        if player_choice < 1 or player_choice > 3:
+                            print("Error. Please enter a number from 1 to 3")
+                        else:
+                            break
+                    except ValueError:
+                        print("Error. Please enter a number from 1 to 3")
+                if player_choice == 1:
+                    print("")
+                    time.sleep(2)
+                    print("You take out your phone and start typing the code in")
+                    print("")
+                    print("2415")
+                    print("")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
+                    room_2_completed = True
+                else:
+                    print("")
+                    print("You type the code into your phone but your phone starts violently shaking and blasts you with a stat-reducing beam")
+                    player_stats["Brainpower"] -= random.randint(1,10)      # These lines give the player a stat reduction
+                    player_stats["Strength"] -= random.randint(1,10)
+                    player_stats["Health"] -= random.randint(1,10)
+                    player_stats["Speed"] -= random.randint(1,10)
+                    print("")
+                    display_player_stats()
+                    print("")
+                    print("You decide to try and do the calculation again and you figure out that the code was actually 2415")
+                    print("")
+                    time.sleep(2)
+                    print("You take out your phone and start typing the code in")
+                    print("")
+                    print("2415")
+                    print("")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
+                    room_2_completed = True
+        else:
+            spacing()
+            print("The man congratulates you on winning the blackjack game and hands you a piece of paper with the code to escape on it")
+            print("")
+            print("'2415'")
+            print("")
+            time.sleep(2)
+            print("You take out your phone and start typing the code in")
+            print("")
+            print("2415")
+            print("")
+            time.sleep(2)
+            print("Code accepted.")
+            print("Your phone starts shaking and you prepare to be teleported to the final room")
+            inventory[1] = 2415
+            room_2_completed = True
+
+    elif player_choice == 2:
+        print("")
+        print("You start shouting at the samurai one by one yelling that they are weak and must stand down now otherwise you will unleash your wrath")
+        if player_stats["Strength"] >= 90:
+            time.sleep(1)
+            print("")
+            print("The samurais look at each other and then at you")
+            print("All at once they agree to stand down, intimidated by your aura")
+            print("They give you free access to the village and all of its resources")
+            print("")
+            time.sleep(2)
+            print("You go into the village and notice each house has a number on it either 2 or 4")
+            if inventory[1] == 2400:
+                time.sleep(1)
+                print("You see two houses in front of you with the numbers 1 and 5")
+                print("As you have no better idea of what to do, you decide to type a code into your phone with the 24 from before, and now the 15 you noticed")
+                print("You type it into your phone slowly...")
+                print("2415")
+                time.sleep(1)
+                print("...")
+                time.sleep(2)
+                print("Code accepted.")
+                print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                inventory[1] = 2415
+                room_2_completed = True
+            else:
+                time.sleep(1)
+                print("You see three houses in front of you with the numbers 4, 1 and 5")
+                print("As you have no better idea of what to do, you decide to type a code into your phone with the 2 from before, and now the 415 you noticed")
+                print("You type it into your phone slowly...")
+                print("2415")
+                time.sleep(1)
+                print("...")
+                time.sleep(2)
+                print("Code accepted.")
+                print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                inventory[1] = 2415
+                room_2_completed = True
+        else:
+            print("")
+            time.sleep(1)
+            print("The samurai look at each other, and then start attacking you")
+            print("")
+            print("You try attacking them back, but they overpower you")
+            player_stats["Health"] -= 20
+            player_stats["Strength"] -= 20
+            time.sleep(1)
+            print("")
+            print("After pinning you down to the ground, the lead samurai asks you 'What are you doing here?'")
+            print("You explain how you are just looking for a code, and wish to be out of their way after you get it")
+            time.sleep(1)
+            print("The samurai look confused, as they do not know what this code is")
+            print("")
+            print("Thinking quickly, you decide to try and distract the samurai by telling them theres a flying piece of sushi in the distance")
+            spacing()
+            print("The gullible samurai actually decide to look at where you're pointing and you take the opportunity to run past them into the village")
+            time.sleep(3)
+            spacing()
+            print("You enter the village, and immediately start searching for clues to the code")
+            print("")
+            while True:
+                try:
+                    print("Where would you like to search?")
+                    player_choice = int(input("1. Count every blade of grass in a garden | 2. Ask every person there until you get a code: "))
+                    if player_choice == 1 or player_choice == 2:
+                        break
+                    else:
+                        print("Error. Please enter either 1 or 2")
+                except ValueError:
+                    print("Error. Please enter either 1 or 2")
+            if player_choice == 1:
                 print("")
-                print("You try typing in the code, but you are too slow")
-                print("You succomb to the injuries from the katana wound...")
-                player_stats["Health"] = 0
+                print("You decide to count every blade of grass in a garden")
+                print("After counting for many hours, you finally land on a number of 2415")
+                print("Everyone in the village watches you confused as to what you could possibly be doing but you ignore them and type the numbers into your phone")
+                print("")
+                time.sleep(1)
+                print("2415")
+                time.sleep(1)
+                print("...")
+                time.sleep(2)
+                print("Code accepted.")
+                print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                inventory[1] = 2415
+                room_2_completed = True
+            elif player_choice == 2:
+                print("")
+                random_chance = random.randint(1,50)
+                print("After asking", random_chance, "people, you finally get the code: 2415")
+                print("Due to asking all of these people, your brainpower has dropped")
+                print("Your brainpower has dropped", random_chance, "points to", player_stats["Brainpower"] - random_chance)
+                player_stats["Brainpower"] -= random_chance
+                spacing()
+                time.sleep(2)
+                print("You start typing the code into your phone")
+                print("")
+                print("2415")
+                time.sleep(1)
+                print("...")
+                time.sleep(2)
+                print("Code accepted.")
+                print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                inventory[1] = 2415
+                room_2_completed = True
+    else:
+        print("")
+        time.sleep(1)
+        print("You try running through the samurai but get stopped immediately by a katana")
+        print("You look down, and a katana has gone through your chest and you fall down onto the ground defeated")
+        time.sleep(2)
+        print("While the samurais walk away, you see a 4 digit code on the back of all of their clothes reading 2415")
+        print("")
+        print("With no other option, you quickly take your phone out and frantically start typing out the code...")
+        time.sleep(2)
+        random_chance = random.randint(1,3)
+        if random_chance == 1:
+            print("")
+            print("You type in 2415 and hit enter")
+            print("")
+            time.sleep(1)
+            print("Code accepted.")
+            print("Your phone starts shaking and you prepare to be teleported to the final room")
+            inventory[1] = 2415
+            room_2_completed = True
+        else:
+            print("")
+            print("You try typing in the code, but you are too slow")
+            print("You succomb to the injuries from the katana wound...")
+            player_stats["Health"] = 0
 
-    if player_choice == 2:
+def room_3():       # This will be the third and final room of the escape room
+    global room_3_completed
+    global player_stats     # Making a few variables global as they will be changed in the room
+    global inventory
+    spacing()
+    display_player_stats()
+    spacing()
+    time.sleep(2)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+# MAIN
 
 starting_sequence()
 time.sleep(2)
@@ -688,6 +781,9 @@ while playing == True:
         if room_2_completed == False and player_stats["Health"] > 0:
             stats_boost()
             room_2()
+        if room_3_completed == False and player_stats["Health"] > 0:
+            stats_boost()
+            room_3()
 
     spacing()
     print("You have died...")

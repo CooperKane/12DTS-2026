@@ -31,6 +31,13 @@ def display_player_stats():   # This shows the player's stats, and will be used 
     print("Brainpower", player_stats["Brainpower"])
     print("Strength", player_stats["Strength"])
 
+def stats_boost():
+    global player_stats
+    player_stats["Health"] += random.randint(5, 25)
+    player_stats["Speed"] += random.randint(5, 25)
+    player_stats["Brainpower"] += random.randint(5, 25)
+    player_stats["Strength"] += random.randint(5, 25)
+
 def menu():   # This is a simple menu that the player can use to play the game or not play the game
     global playing
     spacing()
@@ -442,6 +449,7 @@ def room_2():
         print("He pulls out a piece of paper with numbers on it, which you assume must be the code to escape the second room")
         print("Before you can react, the man pulls out a lighter and burns the paper to ashes")
         print("'Good luck' the man says before disappearing before your eyes")
+        inventory.append(0)
     else:
         print("You have drawn the tic tac toe game against the mysterious man")
         print("He lets out a deep breath and says 'What an exciting game'")
@@ -557,6 +565,97 @@ def room_2():
                 time.sleep(1)
                 print("The samurai look at each other, and then start attacking you")
                 print("")
+                print("You try attacking them back, but they overpower you")
+                player_stats["Health"] -= 20
+                player_stats["Strength"] -= 20
+                time.sleep(1)
+                print("")
+                print("After pinning you down to the ground, the lead samurai asks you 'What are you doing here?'")
+                print("You explain how you are just looking for a code, and wish to be out of their way after you get it")
+                time.sleep(1)
+                print("The samurai look confused, as they do not know what this code is")
+                print("")
+                print("Thinking quickly, you decide to try and distract the samurai by telling them theres a flying piece of sushi in the distance")
+                spacing()
+                print("The gullible samurai actually decide to look at where you're pointing and you take the opportunity to run past them into the village")
+                time.sleep(3)
+                spacing()
+                print("You enter the village, and immediately start searching for clues to the code")
+                print("")
+                while True:
+                    try:
+                        print("Where would you like to search?")
+                        player_choice = int(input("1. Count every blade of grass in a garden | 2. Ask every person there until you get a code: "))
+                        if player_choice == 1 or player_choice == 2:
+                            break
+                        else:
+                            print("Error. Please enter either 1 or 2")
+                    except ValueError:
+                        print("Error. Please enter either 1 or 2")
+                if player_choice == 1:
+                    print("")
+                    print("You decide to count every blade of grass in a garden")
+                    print("After counting for many hours, you finally land on a number of 2415")
+                    print("Everyone in the village watches you confused as to what you could possibly be doing but you ignore them and type the numbers into your phone")
+                    print("")
+                    time.sleep(1)
+                    print("2415")
+                    time.sleep(1)
+                    print("...")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
+                    room_2_completed = True
+                elif player_choice == 2:
+                    print("")
+                    random_chance = random.randint(1,50)
+                    print("After asking", random_chance, "people, you finally get the code: 2415")
+                    print("Due to asking all of these people, your brainpower has dropped")
+                    print("Your brainpower has dropped", random_chance, "points to", player_stats["Brainpower"] - random_chance)
+                    player_stats["Brainpower"] -= random_chance
+                    spacing()
+                    time.sleep(2)
+                    print("You start typing the code into your phone")
+                    print("")
+                    print("2415")
+                    time.sleep(1)
+                    print("...")
+                    time.sleep(2)
+                    print("Code accepted.")
+                    print("Your phone starts shaking again and you prepare to be teleported to the final room")
+                    inventory[1] = 2415
+                    room_2_completed = True
+        else:
+            print("")
+            time.sleep(1)
+            print("You try running through the samurai but get stopped immediately by a katana")
+            print("You look down, and a katana has gone through your chest and you fall down onto the ground defeated")
+            time.sleep(2)
+            print("While the samurais walk away, you see a 4 digit code on the back of all of their clothes reading 2415")
+            print("")
+            print("With no other option, you quickly take your phone out and frantically start typing out the code...")
+            time.sleep(2)
+            random_chance = random.randint(1,3)
+            if random_chance == 1:
+                print("")
+                print("You type in 2415 and hit enter")
+                print("")
+                time.sleep(1)
+                print("Code accepted.")
+                print("Your phone starts shaking and you prepare to be teleported to the final room")
+                inventory[1] = 2415
+                room_2_completed = True
+            else:
+                print("")
+                print("You try typing in the code, but you are too slow")
+                print("You succomb to the injuries from the katana wound...")
+                player_stats["Health"] = 0
+
+
+
+
+
 
 
 
@@ -577,8 +676,10 @@ while playing == True:
         if room_1_completed == False and player_stats["Health"] > 0:
             room_1()
         if room_2_completed == False and player_stats["Health"] > 0:
+            stats_boost()
             room_2()
 
+    spacing()
     print("You have died...")
     print("You were not able to escape")
     playing = False

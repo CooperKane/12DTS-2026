@@ -31,7 +31,7 @@ def display_player_stats():   # This shows the player's stats, and will be used 
     print("Brainpower", player_stats["Brainpower"])
     print("Strength", player_stats["Strength"])
 
-def stats_boost():
+def stats_boost():      # This will give the player a slight stats boost throughout the game
     global player_stats
     player_stats["Health"] += random.randint(5, 25)
     player_stats["Speed"] += random.randint(5, 25)
@@ -49,7 +49,7 @@ def menu():   # This is a simple menu that the player can use to play the game o
     while True:
         try:
             play_game = input("Y for Yes or N for No: ").upper()
-            if play_game == "Y" or play_game == "N":
+            if play_game == "Y" or play_game == "N":        # Some error detection
                 break
             elif play_game == "YES" or play_game == "NO":
                 break
@@ -63,7 +63,7 @@ def menu():   # This is a simple menu that the player can use to play the game o
     else:
         playing = False
 
-def quiz_room_1():
+def quiz_room_1():      # This will be used as the quiz in the first room
     global questions_correct
     questions_correct = 0
     print("")
@@ -233,20 +233,20 @@ def tic_tac_toe():      # This function will be the tic tac toe game in room 2
     ttt_result = "draw"
     return
 
-def blackjack():
+def blackjack():        # This will be used in the second room
     global blackjack_winner
-    player_hand = [random.randint(1, 11), random.randint(1, 10)]
-    man_hand = [random.randint(1, 11), random.randint(1, 10)]
+    player_hand = [random.randint(1, 11), random.randint(1, 10)]        # Gives the player 2 cards with a max value of 21
+    man_hand = [random.randint(1, 11), random.randint(1, 10)]           # Gives the man 2 cards with a max value of 21
     spacing()
-    print("Man's first card: ", man_hand[0])
-    print("Your cards: ", player_hand)
-    print("Your hand value: ", sum(player_hand))
+    print("Man's first card: ", man_hand[0])        # Shows the first card in the man's hand
+    print("Your cards: ", player_hand)              # Shows the cards in players hand
+    print("Your hand value: ", sum(player_hand))    # Shows the sum of the players hand
     player_choice = "y"
-    while sum(player_hand) < 21 and player_choice == "y":
+    while sum(player_hand) < 21 and player_choice == "y":       # This will run whenever the player asks for a hit
         while True:
             try:
                 player_choice = input("Would you like to hit? (Y/N): ").lower()
-                if player_choice == "y" or player_choice == "n":
+                if player_choice == "y" or player_choice == "n":        #Error detection
                     break
                 else:
                     print("Error. Please choose either Y or N")
@@ -255,26 +255,26 @@ def blackjack():
         if player_choice == "n":
             break
 
-        player_hand.append(random.randint(1, 10))
+        player_hand.append(random.randint(1, 10))       #Gives the player a random card
         print("Your cards: ", player_hand)
         print("Your hand value: ", sum(player_hand))
         print("")
 
-    if sum(player_hand) > 21:
+    if sum(player_hand) > 21:       # Checks if the player's hand is a bust
         print("Bust! You lose.")
         blackjack_winner = "Lose"
     else:
-        while sum(man_hand) < 17:
+        while sum(man_hand) < 17:       # Checks if the man has lower than 17, then they will hit
             man_hand.append(random.randint(1, 10))
         print("Man's hand: ", man_hand)
         print("Man's hand value: ", sum(man_hand))
-        if sum(man_hand) > 21 or sum(player_hand) > sum(man_hand):
+        if sum(man_hand) > 21 or sum(player_hand) > sum(man_hand):  # Checks if the player wins
             print("You win!")
             blackjack_winner = "Win"
-        elif sum(player_hand) < sum(man_hand):
+        elif sum(player_hand) < sum(man_hand):      # Checks if the man wins
             print("You lose!")
             blackjack_winner = "Lose"
-        else:
+        else:                                       # If player and man have the same card value then it'll be a tie
             print("Tie")
             blackjack_winner = "Tie"
 
@@ -293,7 +293,7 @@ def room_1():   # This is the function for the first room of my escape room
     print("While exploring the savannah, you come across a pride of lions")
     while True:
         try:
-            print("Would you like to: 1. Run away quickly | 2. Slowly walk away | 3. Try and attack them")
+            print("Would you like to: 1. Run away quickly | 2. Slowly walk away | 3. Try and attack them")      # Gives the player choices so that they can choose their own storyline
             user_choice = int(input("Choose by pressing the corresponding number: "))
             if user_choice > 0 and user_choice < 4:
                 break
@@ -365,7 +365,7 @@ def room_1():   # This is the function for the first room of my escape room
     print("You sit down and start answering the questions that you see")
     time.sleep(1)
     print("")
-    print("WELCOME TO THE AFRICAN HISTORY QUIZ")
+    print("WELCOME TO THE AFRICAN CONTINENT QUIZ")
     print("YOU MUST GET 3 OUT OF 5 QUESTIONS CORRECT TO UNLOCK THE SECRET CODE")
     quiz_room_1()
     if questions_correct >= 3:
@@ -375,7 +375,7 @@ def room_1():   # This is the function for the first room of my escape room
         inventory.append(4830)
     else:
         questions_correct = 0
-        player_stats["Brainpower"] -= 10
+        player_stats["Brainpower"] -= 10        # Lowers player brainpower stat as they lost the quiz
         spacing()
         print("YOU HAVE NOT GOTTEN ENOUGH CORRECT QUESTIONS")
         print("YOU MUST RETRY THE QUIZ")
@@ -404,15 +404,19 @@ def room_1():   # This is the function for the first room of my escape room
                 print("")
                 player_stats["Health"] = 0
     spacing()
-    if questions_correct >= 3:
+    if questions_correct >= 3:      # Makes sure this line doesnt run if the player gets less than 3 questions correct in the quiz
+        print("")
         print("You have obtained the secret code")
         print("You open your phone and start typing in the code")
+        time.sleep(1)
         print("4830")
+        time.sleep(2)
+        print("")
         print("Your phone starts shaking and the world around you starts to fall apart")
         print("The ground underneath you starts breaking and you fall into a void")
         room_1_completed = True
 
-def room_2():
+def room_2():       # This function will run the second room of the game
     global room_2_completed
     global ttt_result
     global player_stats
@@ -432,7 +436,7 @@ def room_2():
     print("The man who you saw in room 1 walks up behind you and asks if you want to play the game with him")
     print("You don't know if you should play or not but as he helped you in room 1, you decide to play him")
     tic_tac_toe()
-    if ttt_result == "win":
+    if ttt_result == "win":     # ttt_result comes from the tic_tac_toe() function
         print("")
         print("You have won the tic tac toe game against the mysterious man")
         print("He smiles at you and says 'Congratulations, you really are better at these games than I thought'")
@@ -449,7 +453,7 @@ def room_2():
         print("He pulls out a piece of paper with numbers on it, which you assume must be the code to escape the second room")
         print("Before you can react, the man pulls out a lighter and burns the paper to ashes")
         print("'Good luck' the man says before disappearing before your eyes")
-        inventory.append(0)
+        inventory.append(0)     # The 0 adds a number so that there is a space in the inventory for the code
     else:
         print("You have drawn the tic tac toe game against the mysterious man")
         print("He lets out a deep breath and says 'What an exciting game'")
@@ -470,7 +474,8 @@ def room_2():
                 print("Error. Please enter a number either 1 or 2")
         except ValueError:
             print("Error. Please enter a number either 1 or 2")
-    if player_choice == 1:
+    if player_choice == 1:      # This is when the player chooses to go to the light
+        print("")
         print("You choose to follow the light and as you walk you notice that the light is coming from a small village")
         print("As you approach the village, what seems to be a samurai guard notices you and yells out a signal to the village warning them")
         print("You try to explain that you come in peace and mean no harm but before you can explain yourself, many other samurai surround you")
@@ -485,10 +490,10 @@ def room_2():
                     break
             except ValueError:
                 print("Error. Please enter a number from 1 to 3")
-        if player_choice == 1:
+        if player_choice == 1:      # This is when the player chooses to run away from the village
             print("")
             print("You start sprinting away from the village as fast as you can without looking behind at all")
-            random_chance = random.randint(1, 2)
+            random_chance = random.randint(1, 2)    # This will give the player a 50/50 if they get left alone or they get chased
             if random_chance == 1:
                 print("")
                 print("The samurais watch you run away with a smile on their faces")
@@ -517,6 +522,8 @@ def room_2():
             blackjack()
             if blackjack_winner == "Tie":
                 spacing()
+                print("The man shrugs at the tie, but liked the amount of effort you put in")
+                print("He decides to give you a hint on what the ")
             elif blackjack_winner == "Lose":
                 spacing()
             else:
@@ -651,6 +658,9 @@ def room_2():
                 print("You try typing in the code, but you are too slow")
                 print("You succomb to the injuries from the katana wound...")
                 player_stats["Health"] = 0
+
+    if player_choice == 2:
+
 
 
 

@@ -7,16 +7,18 @@ import time
 
 #VARIABLES
 
-player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats
+player_stats = {"Health" : 80, "Speed" : 60, "Brainpower" : 75, "Strength" : 70}    # This is my dictionary for the player's stats. These stats will affect the players score at the end of the game
 inventory = []   # This is where any items that the player collects will be stored
 questions_correct = 0   # This will be used during quizzes within the game
 room_1_completed = False
-room_2_completed = False
+room_2_completed = False       # These tell the program if each room has been completed
 room_3_completed = False
 playing = True
-room_2_board = []
+player_choice = 0       # This will be the variable that changes depending on what the player chooses throughout the game
+room_2_board = []       # This will be the tic tac toe board in the second room
 ttt_result = 0
 blackjack_winner = 0
+rugby_game_winner = 0
 
 #FUNCTIONS
 
@@ -41,7 +43,7 @@ def display_player_stats():   # This shows the player's stats, and will be used 
 def stats_boost():      # This will give the player a slight stats boost throughout the game
     global player_stats
     player_stats["Health"] += random.randint(5, 25)
-    player_stats["Speed"] += random.randint(5, 25)
+    player_stats["Speed"] += random.randint(5, 25)      # Each stat can have a random 5-25 value added to it
     player_stats["Brainpower"] += random.randint(5, 25)
     player_stats["Strength"] += random.randint(5, 25)
 
@@ -65,7 +67,7 @@ def menu():   # This is a simple menu that the player can use to play the game o
         except ValueError:
             print("Error. Please enter either Y or N")
 
-    if play_game == "Y" or play_game == "YES":
+    if play_game == "Y" or play_game == "YES":      # Allows the player to say Yes as well as Y
         playing = True
     else:
         playing = False
@@ -78,7 +80,7 @@ def quiz_room_1():      # This will be used as the quiz in the first room
     while True:
         try:
             print("Type the corresponding number to answer")
-            player_choice = int(input("1. Africlanker | 2. Alkebulan | 3. Alpaca: "))
+            player_choice = int(input("1. Africlanker | 2. Alkebulan | 3. Alpaca: "))       # Questions are simple and get progressively harder
             if player_choice > 0 and player_choice < 4:
                 break
             else:
@@ -87,7 +89,7 @@ def quiz_room_1():      # This will be used as the quiz in the first room
             print("Error. Please enter a number for the answers listed")
     if player_choice == 1 or player_choice == 3:
         print("")
-        print("INCORRECT. You have", questions_correct, "correct answer(s)")
+        print("INCORRECT. You have", questions_correct, "correct answer(s)")        # Tells the player how many correct answers they have
     else:
         questions_correct = questions_correct + 1
         print("")
@@ -119,7 +121,7 @@ def quiz_room_1():      # This will be used as the quiz in the first room
         try:
             print("Type the corresponding number to answer")
             player_choice = int(input("1. 10% | 2. 40% | 3. 90%: "))
-            if player_choice > 0 and player_choice < 4:
+            if player_choice > 0 and player_choice < 4:     # Error detection for every player choice
                 break
             else:
                 print("Error. Please enter a number for the answers listed")
@@ -176,7 +178,7 @@ def quiz_room_1():      # This will be used as the quiz in the first room
 def display_board(room_2_board):    # This function will display the tic tac toe board for room 2
     print("")
     print(room_2_board[0], "|", room_2_board[1], "|", room_2_board[2])
-    print(room_2_board[3], "|", room_2_board[4], "|", room_2_board[5])
+    print(room_2_board[3], "|", room_2_board[4], "|", room_2_board[5])      # Prints the board so that it looks normal visually to the player
     print(room_2_board[6], "|", room_2_board[7], "|", room_2_board[8])
     print("")
 
@@ -191,21 +193,20 @@ def tic_tac_toe():      # This function will be the tic tac toe game in room 2
     global room_2_board
     global ttt_result
     for i in range(9):
-        room_2_board.append(i + 1)
+        room_2_board.append(i + 1)      # Quickly adds all the values to the board
     display_board(room_2_board)
     print("Your pieces are Xs. The mans pieces are Os")
     time.sleep(1)
 
-
-    for turn in range(9):
-        if turn == 0 or turn == 2 or turn == 4 or turn == 6 or turn == 8:
+    for turn in range(8):   # Max of 9 turns in a tic tac toe game (starting at 0)
+        if turn == 0 or turn == 2 or turn == 4 or turn == 6 or turn == 8:       # Even number turns will be the player's turn
             print("Your turn...")
             while True:
                 try:
                     player_move = int(input("Choose your position from 1-9: "))
                     if player_move < 1 or player_move > 9:
                         print("Error. Please choose a number from 1-9")
-                    elif room_2_board[player_move - 1] == "X" or room_2_board[player_move - 1] == "O":
+                    elif room_2_board[player_move - 1] == "X" or room_2_board[player_move - 1] == "O":      # Makes sure player chooses an empty space
                         print("Error. That position is already taken. Please choose another position")
                     else:
                         room_2_board[player_move - 1] = "X"
@@ -285,6 +286,68 @@ def blackjack():        # This will be used in the second room
             print("Tie")
             blackjack_winner = "Tie"
 
+def room_3_rugby_game():
+    global rugby_game_winner
+    print("")
+    print("You will have 2 attempts to score a try from a random distance")
+    print("You can choose how to play each attempt, and you will have 3 phases in each attempt to get to the try line")
+    for attempt in range(1,3):      # repeats twice for 2 attempts
+        print("Attempt", attempt, "of 2")
+
+        distance_to_try = random.randint(10,50)     # Makes the distance to the try line random
+        print("You are", distance_to_try, "m from the try line")
+
+        for phase in range(1,4):    # repeats 3 times for 3 phases
+            print("")
+            print("Phase", phase, "|", distance_to_try, ", to try line")
+            while True:
+                try:
+                    print("What would you like to do?")
+                    player_choice = int(input("1. Run | 2. Pass | 3. Kick: "))
+                    if player_choice < 1 or player_choice > 3:
+                        print("Error. Please choose a number from 1 to 3")
+                    else:
+                        break
+                except ValueError:
+                    print("Error. Please choose a number from 1 to 3")
+
+            print("")
+            time.sleep(1)
+
+            if player_choice == 1:      # If the player chooses to run
+                territory_gain = random.randint(3,12)
+                print("You run forward through the defence and gain", territory_gain, "m")
+            elif player_choice == 2:    # If the player chooses to pass
+                territory_gain = random.randint(4,15)
+                print("A well placed pass gains", territory_gain, "m")
+            else:                       # If the player chooses to kick
+                territory_gain = random.randint(5,25)
+                print("A kick up past the defence gains", territory_gain, "m")
+            distance_to_try -= territory_gain
+
+            if distance_to_try <= 0:        # If the player has scored a try
+                print('TRY! You scored the try for your team')
+                rugby_game_winner = "win"
+                break
+        if rugby_game_winner == "win":
+            break
+        if distance_to_try > 0:     # If player does not score a try
+            print("")
+            print("You ran out of phases and did not score a try")
+            print("You were", distance_to_try, "m short of a try")
+            if attempt < 2:     # If player has another attempt
+                time.sleep(2)
+                print("")
+                print("You have one more chance to score")
+            else:
+                print("")
+                print("Game over. You couldn't score a try")
+                rugby_game_winner = "lose"
+
+
+
+
+
 
 
 def room_1():   # This is the function for the first room of my escape room
@@ -325,7 +388,7 @@ def room_1():   # This is the function for the first room of my escape room
     else:
         print("")
         print("You lunge towards the lions and they get ready to fight back")
-        random_chance = random.randint(1,2)
+        random_chance = random.randint(1,2)     # 50/50 chance
         if random_chance == 1:
             print("The lions get scared of your confidence and back away leaving you unharmed")
             print("Where the lions were sitting, you see a potion...")
@@ -361,7 +424,7 @@ def room_1():   # This is the function for the first room of my escape room
             print("Player health has decreased from", player_stats["Health"], "to", player_stats["Health"] - 50)
             player_stats["Health"] = player_stats["Health"] - 50
 
-    print("")
+    print("")       # Story goes back to a normal place after the lion encounter no matter what happens with the lions
     print("After your encounter with the lions, you see a faint building in the distance")
     print("You start walking towards the building and a man greets you when you arrive")
     print("'What are you doing out here'")
@@ -379,7 +442,7 @@ def room_1():   # This is the function for the first room of my escape room
         spacing()
         print("CONGRATULATIONS YOU HAVE UNLOCKED THE SECRET CODE")
         print("CODE: 4830")
-        inventory.append(4830)
+        inventory.append(4830)      # Adds the code to the player's inventory for future use
     else:
         questions_correct = 0
         player_stats["Brainpower"] -= 10        # Lowers player brainpower stat as they lost the quiz
@@ -409,9 +472,9 @@ def room_1():   # This is the function for the first room of my escape room
                 spacing()
                 print("YOU HAVE FAILED AGAIN AND NOW WILL DIE")
                 print("")
-                player_stats["Health"] = 0
+                player_stats["Health"] = 0      # Breaks the while health is greater than 0 loop in the main loop and finishes the game as a loss
     spacing()
-    if questions_correct >= 3:      # Makes sure this line doesnt run if the player gets less than 3 questions correct in the quiz
+    if questions_correct >= 3:      # Makes sure this line doesn't run if the player gets less than 3 questions correct in the quiz
         print("")
         print("You have obtained the secret code")
         print("You open your phone and start typing in the code")
@@ -421,7 +484,7 @@ def room_1():   # This is the function for the first room of my escape room
         print("")
         print("Your phone starts shaking and the world around you starts to fall apart")
         print("The ground underneath you starts breaking and you fall into a void")
-        room_1_completed = True
+        room_1_completed = True     # Makes sure room 1 is not repeated after the player has finished the game
 
 def room_2():       # This function will run the second room of the game
     global room_2_completed
@@ -475,7 +538,7 @@ def room_2():       # This function will run the second room of the game
     print("As you approach the village, what seems to be a samurai guard notices you and yells out a signal to the village warning them")
     print("You try to explain that you come in peace and mean no harm but before you can explain yourself, many other samurai surround you")
     while True:
-        try:
+        try:        # Error detection
             print("")
             print("What would you like to do?")
             player_choice = int(input("1. Try and run away from the village | 2. Intimidate the samurai | 3. Run through the samurai into the village: "))
@@ -514,8 +577,8 @@ def room_2():       # This function will run the second room of the game
         print("You follow him out to a table where he has set out a deck of cards")
         print("")
         print("The man tells you if you can beat him in a game of blackjack, he will give you the remaining part of the code to escape room 2")
-        blackjack()
-        if blackjack_winner == "Tie":
+        blackjack()     # Blackjack game in another function so it can be edited easily and won't be too complicated
+        if blackjack_winner == "Tie":   # variable comes from the blackjack() function
             spacing()
             print("The man shrugs at the tie, but liked the amount of effort you put in")
             print("He decides to give you a hint on what the code is")
@@ -533,7 +596,7 @@ def room_2():       # This function will run the second room of the game
             time.sleep(2)
             print("Code accepted.")
             print("Your phone starts shaking and you prepare to be teleported to the final room")
-            inventory[1] = 2415
+            inventory[1] = 2415     # Completes the code in player's inventory
             room_2_completed = True
 
         elif blackjack_winner == "Lose":
@@ -547,7 +610,7 @@ def room_2():       # This function will run the second room of the game
             print("You think for a second before realising that maybe half means half of the code that you got from the first room")
             print("You remember the code is 4830")
             print("")
-            if player_stats["Brainpower"] >= 60
+            if player_stats["Brainpower"] >= 60:
                 print("As you are smart, you figure out that the code must be 2415")
                 print("")
                 time.sleep(2)
@@ -701,7 +764,7 @@ def room_2():       # This function will run the second room of the game
                 print("")
                 time.sleep(1)
                 print("2415")
-                time.sleep(1)
+                time.sleep(1)       # time.sleep used to create some tension for the player typing in the code
                 print("...")
                 time.sleep(2)
                 print("Code accepted.")
@@ -737,7 +800,7 @@ def room_2():       # This function will run the second room of the game
         print("")
         print("With no other option, you quickly take your phone out and frantically start typing out the code...")
         time.sleep(2)
-        random_chance = random.randint(1,3)
+        random_chance = random.randint(1,3)     # Gives the player a 33% chance of surviving after making a bad decision earlier in the game by attacking the samurai
         if random_chance == 1:
             print("")
             print("You type in 2415 and hit enter")
@@ -761,6 +824,41 @@ def room_3():       # This will be the third and final room of the escape room
     display_player_stats()
     spacing()
     time.sleep(2)
+    print("Welcome to room 3 (The final room)")     # Reminds the player that this is the final room
+    print("This room has a theme of New Zealand")
+    print("Find the code to escape. Good luck")
+    spacing()
+    time.sleep(1)
+    print("With a new burst of confidence, you remember what you learned from the previous rooms, and you immediately start searching for any clues towards the code")
+    print("")
+    time.sleep(1.5)
+    print("In the distance, you see a group of people playing a game of rugby")
+    print("You approach them, and someone asks you if you would like to join in")
+    time.sleep(1)
+    while True:
+        try:
+            print("")
+            print("Would you like to join in?")
+            player_choice = input("Y for Yes | N for No: ").upper()     # Allows the player to say y/n or yes/no in any caps as it will be converted to all caps
+            if player_choice == "Y" or player_choice == "YES" or player_choice == "N" or player_choice == "NO":     # Error detection
+                break
+            else:
+                print("Error. Please enter either Y or N")
+        except ValueError:
+            print("Error. Please enter either Y or N")
+    if player_choice == "Y" or player_choice == "YES":
+        spacing()
+        print("You join into the rugby game, and are placed on the wing")
+        print("Somehow, the captain of the opposition team knows that you are looking for the code. He tells you that if you can score a try, he will give you a hint of what the code is")
+        print("")
+        room_3_rugby_game()
+        if rugby_game_winner == "win":
+            spacing()
+            print("You won the rugby game")
+            print("The opposing captain approaches you and hands you a piece of paper with the hint for the code on it")
+
+
+
 
 
 

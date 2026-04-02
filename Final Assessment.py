@@ -292,13 +292,13 @@ def room_1():   # This is the function for the first room of my escape room
     global questions_correct         # Making a few variables global as they will be changed in the room
     global inventory
     global room_1_completed
-    spacing()
+    spacing()       # Adds some spacing to make the game look cleaner
     print("Welcome to Room 1")
     print("This room has a theme of Africa")
     print("Find the code to escape. Good luck")
     print("")
     print("While exploring the savannah, you come across a pride of lions")
-    while True:
+    while True:     # Error detection
         try:
             print("Would you like to: 1. Run away quickly | 2. Slowly walk away | 3. Try and attack them")      # Gives the player choices so that they can choose their own storyline
             user_choice = int(input("Choose by pressing the corresponding number: "))
@@ -309,7 +309,7 @@ def room_1():   # This is the function for the first room of my escape room
         except ValueError:
             print("Error. Please enter a number from the choices listed")
     if user_choice == 1:
-        random_chance = random.randint(1,10)
+        random_chance = random.randint(1,10)        # Taking some random numbers so there is some randomness in the game
         if random_chance > 8:
             print("")
             print("You try running away, but you twist your ankle")

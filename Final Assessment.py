@@ -1059,7 +1059,7 @@ def room_3():       # This will be the third and final room of the escape room
             combination_lock_puzzle()
             time.sleep(2)
             spacing()
-            if combination_lock_puzzle == True:         # If the player beats the combination lock puzzle
+            if combination_lock_winner == True:         # If the player beats the combination lock puzzle
                 print("You enter the hut, and look outside. It's still pouring down with rain")
                 time.sleep(1)
                 print("You hold the combination lock in your hand and think to yourself: it would be crazy if the code to escape was the combination lock's code")

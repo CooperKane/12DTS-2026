@@ -1276,19 +1276,19 @@ while playing == True:
             print("The man asks you. 'Do you want to try again?'")
             while True:
                 try:
-                    player_choice = int(input("1 to play again | 2 to quit"))
+                    player_choice = int(input("1 to play again | 2 to quit"))       # Lets the player choose to play again or quit
                     if player_choice == 1 or player_choice == 2:
                         break
                     else:
                         print("Error. Please enter either 1 or 2")
                 except ValueError:
                     print("Error. Please enter either 1 or 2")
-            if player_choice == 1:
+            if player_choice == 1:      # If the player wants to play again
                 playing = True
                 reset_variables()
                 starting_sequence()
                 time.sleep(2)
-            else:
+            else:                   # If the player does not want to play again
                 playing = False
         else:
             spacing()

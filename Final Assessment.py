@@ -19,8 +19,39 @@ room_2_board = []       # This will be the tic tac toe board in the second room
 ttt_result = 0
 blackjack_winner = 0
 rugby_game_winner = 0
+combination_lock_winner = 0
+room_3_fishing_chance = 0
+room_3_lock_combination = []
 
 #FUNCTIONS
+
+def reset_variables():
+    global player_stats
+    global inventory
+    global questions_correct
+    global room_1_completed
+    global room_2_completed
+    global room_3_completed
+    global room_2_board
+    global ttt_result
+    global blackjack_winner
+    global rugby_game_winner
+    global combination_lock_winner
+    global room_3_fishing_chance
+    global room_3_lock_combination
+    player_stats = {"Health": 80, "Speed": 60, "Brainpower": 75, "Strength": 70}
+    inventory = []
+    questions_correct = 0
+    room_1_completed = False
+    room_2_completed = False
+    room_3_completed = False
+    room_2_board = []
+    ttt_result = 0
+    blackjack_winner = 0
+    rugby_game_winner = 0
+    combination_lock_winner = 0
+    room_3_fishing_chance = 0
+    room_3_lock_combination = []
 
 def spacing():   # This just adds some spacing where ever I need it to make the program look nicer
     print("")
@@ -46,6 +77,12 @@ def stats_boost():      # This will give the player a slight stats boost through
     player_stats["Speed"] += random.randint(5, 25)      # Each stat can have a random 5-25 value added to it
     player_stats["Brainpower"] += random.randint(5, 25)
     player_stats["Strength"] += random.randint(5, 25)
+
+def stat_drop():
+    global player_stats
+    player_stats["Speed"] -= random.randint(5, 25)
+    player_stats["Brainpower"] -= random.randint(5, 25)     # Each stat is reduced except for health so that the player does not lose the game immediately from the stat drop
+    player_stats["Strength"] -= random.randint(5, 25)
 
 def menu():   # This is a simple menu that the player can use to play the game or not play the game
     global playing
@@ -299,7 +336,7 @@ def room_3_rugby_game():
 
         for phase in range(1,4):    # repeats 3 times for 3 phases
             print("")
-            print("Phase", phase, "|", distance_to_try, ", to try line")
+            print("Phase", phase, "|", distance_to_try, "m to try line")
             while True:
                 try:
                     print("What would you like to do?")
@@ -344,7 +381,130 @@ def room_3_rugby_game():
                 print("Game over. You couldn't score a try")
                 rugby_game_winner = "lose"
 
+def combination_lock_puzzle():      # This will be the cobination lock in the
+    global combination_lock_winner
+    global room_3_lock_combination
+    spacing()
+    print("Welcome to the combination lock puzzle")
+    print("")
+    print("There are 4 dials which have to be turned to match the code to get in the hut")
+    print("Solve each clue given to find the digits for the lock")
+    time.sleep(2)
 
+    clues = [                                       # These are the questions as well as the answers
+        ("How many sides does a triangle have?", 3),
+        ("What is 20 divided by 5?", 4),
+        ("How many legs does a spider have minus 7?", 1),
+        ("What is 3 squared minus 2?", 7)
+    ]
+    answers = []            # The player's answers will go in here
+    tries = 3               # The player gets 3 tries before failing the lock
+
+    for i in range(len(clues)):
+        clue, answer = clues[i]     # clue will be the clue itself, and answer will be the number that corresponds to the clue
+        solved = False
+        print("Dial", i + 1, ":", clue)
+        while solved == False:
+            if tries <=0:
+                break
+            else:
+                try:
+                    print("")
+                    guess = int(input("Your answer: "))
+                    if guess == answer:                     # If the player guesses correctly
+                        print("")
+                        print("Correct!")
+                        answers.append(guess)
+                        solved = True
+                    else:                                   # If the player guesses wrong
+                        tries -=1
+                        print("")
+                        print("Incorrect! Tries remaining:", tries)
+                        if tries <= 0:
+                            break
+                        else:
+                            print("Dial", i + 1, ":", clue)
+                except ValueError:
+                    print("Error. Please enter a number from 0-9")
+
+        if tries <= 0:
+            break
+
+    spacing()
+    if tries > 0:
+        print("You cracked the lock")
+        print(answers)                              # Shows the players the answers
+        room_3_lock_combination.append(answers)     # Puts the answers that the player got into a global variable to be used later
+        combination_lock_winner = True              # Tells the game if the player has cracked the combination lock
+    else:
+        print("You ran out of tries")
+        print("The lock stays closed")
+        print("You are left with", answers)
+        room_3_lock_combination.append(answers)
+        combination_lock_winner = False             # Tells the game that the player failed to crack the combination lock
+
+def room_3_number_guessing(x):       # This is the function for the player guessing the last number(s) of the code in the 3rd room
+    answer = x
+    spacing()
+    print("Guess a number from 0-9")
+    while True:
+        try:
+            guess = int(input("Your guess: "))
+            if guess == answer:
+                print("Correct! The number was", x)
+                break
+            elif guess < answer:
+                print("Incorrect. The number is higher")
+            else:
+                print("Incorrect. The number is lower")
+        except ValueError:
+            print("Error. Please enter a number from 0-9")
+
+def fishing_slot_game():        # This is the function for the fishing game in the third room
+    global room_3_fishing_chance
+    spacing()
+    print("Welcome to the fishing game")
+    print("")
+    print("Press 1 to cast your rod, or 2 to quit and take your chances with whatever you have caught")
+    time.sleep(1)
+
+    score = 0
+
+    while True:         # The player can reroll for as long as they want
+        try:
+            print("Score: ", score)
+            print("Would you like to cast again or quit?")
+            player_choice = int(input("Press 1 to cast | Press 2 to quit: "))
+
+            if player_choice == 2:
+                print("You step back and will take your chances with whatever you have caught with score: ", score)
+                break
+            else:
+                print("You cast your rod")
+                print("")
+
+            slot_1 = random.randint(1, 9)
+            slot_2 = random.randint(1, 9)
+            slot_3 = random.randint(1, 9)
+
+            print(slot_1, slot_2, slot_3)
+            time.sleep(0.5)
+
+            score = slot_1 + slot_2 + slot_3
+
+        except ValueError:
+            print("Error. Please enter a number either 1 or 2")
+
+    if score >= 25:
+        room_3_fishing_chance = 100         # Gives the player different odds based on what fish they end up with
+    elif score >= 20:
+        room_3_fishing_chance = 90
+    elif score >= 15:
+        room_3_fishing_chance = 80
+    elif score >= 10:
+        room_3_fishing_chance = 70
+    else:
+        room_3_fishing_chance = 50
 
 
 
@@ -851,18 +1011,241 @@ def room_3():       # This will be the third and final room of the escape room
         print("You join into the rugby game, and are placed on the wing")
         print("Somehow, the captain of the opposition team knows that you are looking for the code. He tells you that if you can score a try, he will give you a hint of what the code is")
         print("")
-        room_3_rugby_game()
-        if rugby_game_winner == "win":
+        room_3_rugby_game()             # This function runs the rugby game
+        if rugby_game_winner == "win":          # This variable comes from the rugby game function
             spacing()
             print("You won the rugby game")
             print("The opposing captain approaches you and hands you a piece of paper with the hint for the code on it")
+            print("The paper says 'The code is the score from the rugby world cup final in 2015 NZ-AUS'")
+            print("")
+            while True:
+                try:
+                    print("")
+                    print("Would you like to try and guess the code? (Getting the code wrong can lead to a stat loss)")
+                    player_choice = input("Y for Yes | N for No: ").upper()         # Lets the player choose if they want to risk their stats to try and win early
+                    if player_choice == "Y" or player_choice == "YES" or player_choice == "N" or player_choice == "NO":
+                        break
+                    else:
+                        print("Error. Please choose either Y or N")
+                except ValueError:
+                    print("Error. Please choose either Y or N")
 
+            if player_choice == "Y" or player_choice == "YES":      # If player says yes to guessing the code
+                while True:
+                    try:
+                        print("")
+                        player_choice = int(input("What would you like to guess?: "))
+                        spacing()
+                        print("You pull out your phone and start typing in the code")
+                        print(player_choice)
+                        print("")
+                        time.sleep(2)
+                        print("...")
+                        time.sleep(2)
+                        print("")
+                        if player_choice == 3417:
+                            print("Code accepted.")
+                            inventory.append(3417)      # Adds the final code to the player's inventory
+                            print("You let out a sigh of relief as your phone starts shaking again to teleport you out of the escape room")
+                            room_3_completed = True
+                            break
+                        else:
+                            print("Code not accepted.")
+                            print("")
+                            stat_drop()         # Gives the player a stat drop for getting the code wrong
+                            break
+                    except ValueError:
+                        print("Error. Please enter the code as a 4 digit number")
 
+            elif player_choice == "N" or player_choice == "NO":     # If the player says no to guessing the code
+                print("")
+                print("You are not too sure about what the code could be yet, but you keep the hint in your mind so if you see another hint you can work it out")
 
+            if room_3_completed != True:
+                spacing()
+                print("You walk away from the rugby game, still thinking about what the code could be when rain starts pouring down violently")
+                print("You see a small hutt in the distance, so you run towards it in hope of shelter")
+                time.sleep(2)
+                print("When you get to the hut, you notice there is a combination lock attached to the door, with a sign with instructions on how to open it...")
+                combination_lock_puzzle()
+                time.sleep(2)
+                spacing()
+                if combination_lock_puzzle == True:         # If the player beats the combination lock puzzle
+                    print("You enter the hut, and look outside. It's still pouring down with rain")
+                    time.sleep(1)
+                    print("You hold the combination lock in your hand and think to yourself: it would be crazy if the code to escape was the combination lock's code")
+                    time.sleep(1)
+                    print("With nothing really to lose, you pull out your phone and start typing")
+                    print("")
+                    time.sleep(1)
+                    print("3417")
+                    time.sleep(1)
+                    print("...")
+                    time.sleep(1)
+                    print("Code accepted.")
+                    print("Your jaw drops as your phone starts shaking again and you prepare to teleport out of the escape room")
+                else:           # If the player does not beat the combination lock puzzle
+                    print("You are stuck outside in the rain, slowly getting colder and colder")
+                    player_stats["Strength"] -= 20    # Player strength drops due to cold
+                    print("You are left with digits: ", room_3_lock_combination)
+                    print("")
+                    time.sleep(1)
+                    print("You think to yourself. Maybe the combination lock is the code to escape this room")
+                    print("")
+                    time.sleep(2)
+                    if len(room_3_lock_combination) == 3:       # If the player has 3 digits
+                        print("You look at the numbers you have: 341 and think about what the last digit could be")
+                        print("You know that the code is the score of a rugby game, so you start thinking to yourself, what would have the score been")
+                        print("It would be 34-1_ but you can't think of what the missing number would be")
+                        print("")
+                        time.sleep(1.5)
+                        print("You look at your phone and it says: TRY AND GUESS THE MISSING NUMBER AND I WILL TELL YOU IF THE ANSWER IS HIGHER OR LOWER")
+                        print("")
+                        time.sleep(1)
+                        print("You decide to try and guess the number as you don't have any better ideas")
+                        room_3_number_guessing(7)
+                        spacing()
+                        print("Now that you have found the last number, you enter the code into your phone")
+                        print("")
+                        time.sleep(1)
+                        print("3417")
+                        time.sleep(1)
+                        print("...")
+                        time.sleep(1)
+                        print("Code accepted.")
+                        print("")
+                        print("You close your eyes and prepare to be teleported out of the escape room")
+                    elif len(room_3_lock_combination) == 2:          # If the player has 2 digits
+                        print("You look at the numbers you have: 34 and think about what the last 2 digits could be")
+                        print("You know that the code is the score of a rugby game, so you start thinking to yourself, what would have the score been")
+                        print("It would be 34-__ but you can't think of what the missing numbers would be")
+                        print("")
+                        time.sleep(1.5)
+                        print("You look at your phone and it says: TRY AND GUESS THE MISSING NUMBERS AND I WILL TELL YOU IF THE ANSWERS ARE HIGHER OR LOWER")
+                        print("")
+                        time.sleep(1)
+                        print("You decide to try and guess the numbers as you don't have any better ideas")
+                        room_3_number_guessing(1)
+                        print("")
+                        time.sleep(1)
+                        print("Now you have 3 numbers, so you try to guess the last number as well")
+                        room_3_number_guessing(7)
+                        time.sleep(2)
+                        spacing()
+                        print("Now that you have found the last numbers, you enter the code into your phone")
+                        print("")
+                        time.sleep(1)
+                        print("3417")
+                        time.sleep(1)
+                        print("...")
+                        time.sleep(1)
+                        print("Code accepted.")
+                        print("")
+                        print("You close your eyes and prepare to be teleported out of the escape room")
+                    elif len(room_3_lock_combination) == 1:      # If the player has 1 digit
+                        print("You look at the number you have: 3 and think about what the last 3 digits could be")
+                        print("You know that the code is the score of a rugby game, so you start thinking to yourself, what would have the score been")
+                        print("It would be 3_-__ but you can't think of what the missing numbers would be")
+                        print("")
+                        time.sleep(1.5)
+                        print("You look at your phone and it says: TRY AND GUESS THE MISSING NUMBERS AND I WILL TELL YOU IF THE ANSWERS ARE HIGHER OR LOWER")
+                        print("")
+                        time.sleep(1)
+                        print("You decide to try and guess the numbers as you don't have any better ideas")
+                        room_3_number_guessing(4)
+                        print("")
+                        time.sleep(1)
+                        print("Now you have 2 numbers, so you try to guess the last 2 numbers as well")
+                        room_3_number_guessing(1)
+                        print("")
+                        time.sleep(1)
+                        print("Now you have 3 numbers, so you try to guess the final number")
+                        room_3_number_guessing(7)
+                        time.sleep(2)
+                        spacing()
+                        print("Now that you have found all the missing numbers, you enter the code into your phone")
+                        print("")
+                        time.sleep(1)
+                        print("3417")
+                        time.sleep(1)
+                        print("...")
+                        time.sleep(1)
+                        print("Code accepted.")
+                        print("")
+                        print("You close your eyes and prepare to be teleported out of the escape room")
+                    else:           # If the player has 0 digits of the code
+                        print("You have none of the numbers that you need to get the code")
+                        print("You look at your phone and it says: TRY AND GUESS THE MISSING NUMBERS AND I WILL TELL YOU IF YOUR ANSWERS ARE TOO HIGH OR TOO LOW")
+                        print("")
+                        time.sleep(1)
+                        print("You decide to try and guess the numbers as you don't have any better ideas")
+                        room_3_number_guessing(3)
+                        print("")
+                        time.sleep(1)
+                        print("Now you have 1 number, so you try to guess the other 3 numbers")
+                        room_3_number_guessing(4)
+                        print("")
+                        time.sleep(1)
+                        print("Now you have 2 numbers, so you try to guess the final 2 numbers")
+                        room_3_number_guessing(1)
+                        time.sleep(1)
+                        print("Now you have 3 numbers, so you try and guess the final number")
+                        time.sleep(2)
+                        spacing()
+                        print("Now that you have found all the missing numbers, you enter the code into your phone")
+                        print("")
+                        time.sleep(1)
+                        print("3417")
+                        time.sleep(1)
+                        print("...")
+                        time.sleep(1)
+                        print("Code accepted.")
+                        print("")
+                        print("You close your eyes and prepare to be teleported out of the escape room")
+                    inventory.append(3417)      # Adds the code to the player's inventory
+                    room_3_completed = True          # Tells the program that the player has completed the third room
 
-
-
-
+        if rugby_game_winner == "lose":     # If the player loses the rugby game
+            spacing()
+            print("You lost the rugby game")
+            print("You leave the park without saying anything except 'Good Game' to all of your teammates")
+            print("")
+            print("Back into the search for clues to the code, you come across the mysterious man again")
+            print("")
+            print("You walk towards the man, and ask him to help you")
+            time.sleep(1)
+            print("The man tells you that he will tell you the code, as long as you help him catch a fish")
+            print("You quickly agree, and he tells you to follow him to his boat")
+            print("The man tells you on the ride to the fishing spot that the better score the fish is, the higher the chance that he'll give you the code")
+            time.sleep(1)
+            print("'But if the fish isn't a high enough score, I might have to throw you overboard'")
+            print("")
+            time.sleep(1)
+            print("A shiver runs down your spine, but you take the chances, and agree")
+            print("You know that you need to make sure the fish is as good as possible")
+            fishing_slot_game()
+            spacing()
+            random_chance = random.randint(1,100)       # This is a percentage chance and will determine if the player gets the code from the man or not
+            if random_chance > room_3_fishing_chance:       # This is for when the fish isn't good enough
+                print("The man looks at you and says 'That fish isn't good enough'")
+                print("He throws you overboard, and you are unable to get back to the shore")
+                print("You slowly drown, as you watch the man speed away")
+                player_stats["Health"] = 0          # Makes the player lose the game instantly
+            else:       # This is for when the player will get the code
+                print("The man looks at the fish that you caught for him and is pleased")
+                print("He hands you a piece of paper with 4 digits on it, and he tells you to put it in your phone and get out of here")
+                print("")
+                time.sleep(2)
+                print("You take out your phone and start typing the code in")
+                time.sleep(1)
+                print("")
+                print("...")
+                time.sleep(1)
+                print("")
+                print("Code accepted.")
+                print("Your phone starts shaking and you nod to the man as you prepare to teleport out of the escape room")
+                inventory.append(3417)
+                room_3_completed = True     # Finishes the room
 
 # MAIN
 
@@ -882,11 +1265,36 @@ while playing == True:
         if room_3_completed == False and player_stats["Health"] > 0:
             stats_boost()
             room_3()
-
-    spacing()
-    print("You have died...")
-    print("You were not able to escape")
-    playing = False
+        if room_1_completed == True and room_2_completed == True and room_3_completed == True:
+            spacing()
+            print("You have completed the escape room")
+            print("You wake up in Te Papa Museum and the familiar face of the man from the escape room greets you")
+            print("The man tells you that it was all a simulation, and you are one of the first to complete the entire thing")
+            final_score = player_stats["Health"] + player_stats["Strength"] + player_stats["Speed"] + player_stats["Brainpower"]
+            print("He also tells you that your score was", final_score)
+            spacing()
+            print("The man asks you. 'Do you want to try again?'")
+            while True:
+                try:
+                    player_choice = int(input("1 to play again | 2 to quit"))
+                    if player_choice == 1 or player_choice == 2:
+                        break
+                    else:
+                        print("Error. Please enter either 1 or 2")
+                except ValueError:
+                    print("Error. Please enter either 1 or 2")
+            if player_choice == 1:
+                playing = True
+                reset_variables()
+                starting_sequence()
+                time.sleep(2)
+            else:
+                playing = False
+        else:
+            spacing()
+            print("You have died...")
+            print("You were not able to escape")
+            playing = False
 
 spacing()
 print("Come back and play again another time")
